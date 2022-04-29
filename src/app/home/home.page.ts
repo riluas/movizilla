@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
-  public home: string;
+export class HomePage{
 
-  constructor(private activatedRoute: ActivatedRoute) { }
-
-  ngOnInit() {
-    this.home = this.activatedRoute.snapshot.paramMap.get('id');
-  }
-
+  constructor(private dataService: DataService) {
+    this.dataService.getNotes().subscribe(res =>{
+      console.log(res);
+    })
+   }
 }

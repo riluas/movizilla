@@ -7,15 +7,51 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content class="bg-classLanz-Seg" [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">{{ folder }}</ion-title>
+      <ion-title size="large">Home</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-card class="card" *ngFor="let launch of infoLaunches; let i = index" (click)='setLaunchId(launch.id)'
+    [routerLink]="['/lanzamiento-detalle/',launch.id]">
+    <ion-card-header id="cardHeader">
+      <ion-card-title>{{launch.name}}</ion-card-title>
+      <div *ngFor="let rocket1 of infoRocket; let u = index">
+        <div *ngIf='launch.rocket == rocket1.id'>
+          <p>{{rocket1.name}}</p>
+        </div>
+      </div>
+      <div *ngFor="let launchpads of infoLaunchpad; let e = index">
+        <div *ngIf='launchpads.id == launch.launchpad'>
+          <p>{{launchpads.locality}}, {{launchpads.region}}</p>
+        </div>
+      </div>
+      <ion-datetime disabled id="fecha" value={{launch.date_utc}} displayFormat="D/M/YYYY  HH:mm " display-timezone="CET"></ion-datetime>
+    </ion-card-header>
+    <div *ngIf='launch.links.patch.small'>
+      <ion-avatar class="image">
+        <img src='{{launch.links.patch.small}}' alt="">
+      </ion-avatar>
+    </div>
+    <div *ngIf='!launch.links.patch.small'>
+      <div *ngFor="let rocket1 of infoRocket; let u = index">
+        <div *ngIf='launch.rocket == rocket1.id'>
+          <ion-avatar class="image">
+            <img src="{{rocket1.flickr_images[1]}}" alt="">
+          </ion-avatar>
+        </div>
+      </div>
+    </div>
+    <ion-card-content>
+      <div style="text-align: center" *ngFor="let date of newArrayDate; let i = index">
+        <span *ngIf="date.id == launch.id">
+          <ion-text color="dark">
+            <h1>{{date.date}}</h1>
+          </ion-text>
+        </span>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
