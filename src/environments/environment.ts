@@ -4,6 +4,9 @@
 
 export const environment = {
   production: false,
+  apiKey: '2bc73ba964757bad4fe4dee178c2d602',
+  baseUrl: 'https://api.themoviedb.org/3',
+  images: 'http://image.tmdb.org/t/p',
   firebase:{
     apiKey: "AIzaSyBFAllgNUoAj9d5t2Kwc8qjkTRdB6KuNiA",
     authDomain: "movizilla-a3b4b.firebaseapp.com",
