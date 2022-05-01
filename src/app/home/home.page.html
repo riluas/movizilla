@@ -8,7 +8,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12" size-xs="6"  size-sm="6" size-md="4" size-lg="3" *ngFor="let item of movies; let i = index" >
+        <ion-card [routerLink]=" [item.id]">
+          <img [src]="imageBaseUrl + '/w400' + item.poster_path" />
+          <ion-card-header>
+            <ion-card-title>{{item.title}}</ion-card-title>
+            <ion-card-subtitle>
+              {{item.release_date | date:'d/M/yy'}}
+              <!-- <ion-badge color="primary">{{item.vote_average}}</ion-badge> -->
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-list>
     <ion-item  button *ngFor="let item of movies; let i = index" [routerLink]=" [item.id]">
       <ion-avatar slot="start">
         <img [src]="imageBaseUrl + '/w92' + item.poster_path" />
@@ -19,7 +37,7 @@
     </ion-label>
     <ion-badge slot="end" color="primary">{{item.vote_average}}</ion-badge>
     </ion-item>
-  </ion-list>
+  </ion-list> -->
 
 
   <ion-infinite-scroll (ionInfinite)="loadMore($event)">
