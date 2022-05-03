@@ -1,0 +1,41 @@
+#title{
+    margin-bottom: 10px;
+}
+#logo{
+    width: 188px;
+    margin: auto;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+.emailPassword{
+    color: rgb(199, 199, 199);
+}
+.emailPassword:focus{
+    color: rgb(199, 199, 199);
+}
+#loginButton{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    height: 40px;
+    border-color: transparent;
+    color: rgb(43, 43, 43);
+    background-color: rgb(255 255 255 / 35%);
+    border-radius: 50px;   
+}
+.registerGuest{
+    margin-top: -12px;
+    margin-bottom: -8px;
+}
+.registerGuestText{
+    font-size: 11px;
+    --color: black;
+}
+.item-has-focus{
+    --highlight-background: white;
+    --color-focused: white !important;
+ }
+ .item-has-focus > ion-label{
+    --highlight-background: white;
+    color: white !important;
+ }

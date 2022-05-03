@@ -1,9 +1,30 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="bg-classLogin" [fullscreen]="true">
+  <h1 id="title" class="ion-text-center textWhite">Movizilla</h1>
+  <div id="container">
+    <img id="logo" [src]="image"/>
+    <form>
+    <ion-item class="userInput textWhite">
+      <ion-label position="floating">Email</ion-label>
+      <ion-input class="emailPassword" type="text" [(ngModel)]="loginEmail" name="email"></ion-input>
+    </ion-item>
 
-<ion-content>
+    <ion-item class="userInput textWhite">
+      <ion-label position="floating">Password</ion-label>
+      <ion-input class="emailPassword" type="password" [(ngModel)]="loginPassword"  name="password"></ion-input>
+    </ion-item>
 
+    <ion-grid>
+      <ion-row class="ion-align-items-center textWhite">
+        <ion-col size="12" class="ion-text-center">
+          <ion-button id="loginButton" fill="clear" (click)="login()">Log in</ion-button>
+          <p class="registerGuestText">¿Aún no tienes cuenta?</p>
+          <ion-button class="registerGuest registerGuestText" fill="clear" (click)="create()">Sing up</ion-button>
+          <p class="registerGuestText">or as</p>
+          <ion-button class="registerGuest registerGuestText" fill="clear" (click)="guest()">Guest</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </form>   
+  </div>
 </ion-content>
