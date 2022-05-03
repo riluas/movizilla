@@ -15,9 +15,9 @@
         <ion-card [routerLink]=" [item.id]">
           <img [src]="imageBaseUrl + '/w400' + item.poster_path" />
           <ion-card-header>
-            <ion-card-title>{{item.title}}</ion-card-title>
+            <ion-card-title class="movieTitle">{{item.title}}</ion-card-title>
             <ion-card-subtitle>
-              {{item.release_date | date:'d/M/yy'}}
+              {{item.release_date ? (item.release_date | date:'d/M/yy') : 'No data' }}
               <!-- <ion-badge color="primary">{{item.vote_average}}</ion-badge> -->
             </ion-card-subtitle>
           </ion-card-header>
