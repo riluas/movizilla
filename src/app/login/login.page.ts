@@ -45,10 +45,9 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
-      this.router.navigateByUrl('/home', {replaceUrl: true})
-    }
-    else{
-      this.showAlert('Registration Failed', 'Please try again!');
+      this.router.navigateByUrl('/home', {replaceUrl: true});
+    } else{
+      this.showAlert('Registration failed', 'Please try again!');
     }
   };
 
@@ -60,10 +59,9 @@ export class LoginPage implements OnInit {
     await loading.dismiss();
 
     if(user){
-      this.router.navigateByUrl('/home', {replaceUrl: true})
-    }
-    else{
-      this.showAlert('Login Failed', 'Please try again!');
+      this.router.navigateByUrl('/home', {replaceUrl: true});
+    } else{
+      this.showAlert('Login failed', 'Please try again!');
     }
   };
 
@@ -75,6 +73,5 @@ export class LoginPage implements OnInit {
     });
     await alert.present();
   };
-
 
 }

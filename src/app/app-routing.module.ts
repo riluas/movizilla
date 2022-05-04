@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+
+
+const redirectUnToLogin = () => redirectUnauthorizedTo(['']);
+const redirectLogToHome = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    ...canActivate(redirectLogToHome)
   },
   {
     path: 'folder/:id',
@@ -13,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    ...canActivate(redirectUnToLogin)
   },
   {
     path: 'login',
@@ -21,19 +27,22 @@ const routes: Routes = [
   },
   {
     path: 'followed',
-    loadChildren: () => import('./followed/followed.module').then( m => m.FollowedPageModule)
+    loadChildren: () => import('./followed/followed.module').then( m => m.FollowedPageModule),
+    ...canActivate(redirectUnToLogin)
   },
   {
     path: 'sing-up',
-    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule)
+    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule),
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule),
+    ...canActivate(redirectUnToLogin)
   },
   {
     path: 'home/:id',
-    loadChildren: () => import('./movie-details/movie-details.module').then( m => m.MovieDetailsPageModule)
+    loadChildren: () => import('./movie-details/movie-details.module').then( m => m.MovieDetailsPageModule),
+    ...canActivate(redirectUnToLogin)
   }
 ];
 
