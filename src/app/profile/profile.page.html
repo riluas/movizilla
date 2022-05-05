@@ -1,36 +1,23 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-button (click)="logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title> My Profile </ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content class="bg-classImageSpace" [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Profile</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div class="textWhite" id="container">
-    <input type="file" id="myFileInput" name="inputFile" (ionRefresh)="doRefresh($event)" (change)="upload($event)"
-      accept="*.png.jpg" />
-    <ion-avatar class="avatar" >
-      <img id="avatar" src={{userImage}}>
+ 
+<ion-content class="ion-padding">
+  <div class="preview">
+    <ion-avatar (click)="changeImage()">
+      <img *ngIf="profile?.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
+      <ng-template #placheolder_avatar>
+        <div class="fallback">
+          <p>Select avatar</p>
+        </div>
+      </ng-template>
     </ion-avatar>
-    <div *ngIf='!invitado'>
-    <ion-button class="noBgButton" (click)='fInput()' expand="block" fill="clear" shape="round">
-      <span id="changeImg" class="verdana textWhite">Change image</span>
-    </ion-button>
-  </div>
-    <p class="capitalize textWhite">Name<span class="dataPerfil">{{currentUser}}</span></p>
-    <hr class="line">
-    <p class="capitalize textWhite">Surname<span class="dataPerfil">{{userSurname}}</span></p>
-    <hr class="line">
-    <p class="capitalize textWhite">Email<span class="dataPerfil">{{email}}</span></p>
-    <hr class="line">
-    <ion-button id="logOut" (click)="logout()" expand="block" color="danger" fill="clear" shape="round">Log out</ion-button>
   </div>
 </ion-content>

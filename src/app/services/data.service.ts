@@ -1,9 +1,17 @@
 import { Injectable } from '@angular/core';
-import { collectionData, Firestore } from '@angular/fire/firestore';
 import { collection } from '@firebase/firestore';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { collectionData, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import {
+  getDownloadURL,
+  ref,
+  Storage,
+  uploadString,
+} from '@angular/fire/storage';
+import { Photo } from '@capacitor/camera';
 
 
 export interface ApiResult{
@@ -18,7 +26,12 @@ export interface ApiResult{
 })
 export class DataService {
 
-  constructor(private firestore:Firestore, private http: HttpClient) { }
+  constructor(
+    private firestore:Firestore,
+    private http: HttpClient,
+    private auth: Auth,
+    private storage: Storage
+    ) { }
 
   getNotes(){
     const notesRef = collection(this.firestore, 'notes');
@@ -34,5 +47,33 @@ export class DataService {
     return this.http.get(
       `${environment.baseUrl}/movie/${id}?api_key=${environment.apiKey}`
       );
+  }
+
+
+  //To upload images
+  getUserProfile() {
+    const user = this.auth.currentUser;
+    const userDocRef = doc(this.firestore, `users/${user.uid}`);   
+    return docData(userDocRef, { idField: 'id' });
+  }
+  
+  async uploadImage(cameraFile: Photo) {
+    const user = this.auth.currentUser;
+    const path = `uploads/${user.uid}/profile.png`;
+    const storageRef = ref(this.storage, path);
+ 
+    try {
+      await uploadString(storageRef, cameraFile.base64String, 'base64');
+ 
+      const imageUrl = await getDownloadURL(storageRef);
+ 
+      const userDocRef = doc(this.firestore, `users/${user.uid}`);
+      await setDoc(userDocRef, {
+        imageUrl,
+      });
+      return true;
+    } catch (e) {
+      return null;
+    }
   }
 }
