@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +13,10 @@ export class ProfilePage implements OnInit {
   userSurname: string;
   email: string;
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
@@ -19,5 +24,10 @@ export class ProfilePage implements OnInit {
     this.userSurname = "Lamar Asis";
     this.email = "prueba@prueba.es";
   }
+
+  async logout(){
+    await this.authService.logout();
+    this.router.navigateByUrl('/',{replaceUrl: true }); 
+  };
 
 }
