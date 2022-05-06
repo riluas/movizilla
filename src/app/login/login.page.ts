@@ -37,19 +37,22 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async register() {
-    const loading = await this.loadingController.create();
-    await loading.present();
+  register() {
+    this.router.navigate(['/sing-up'])
+  }
+  // async register() {
+  //   const loading = await this.loadingController.create();
+  //   await loading.present();
 
-    const user = await this.authService.register(this.credentials.value);
-    await loading.dismiss();
+  //   const user = await this.authService.register(this.credentials.value);
+  //   await loading.dismiss();
 
-    if(user){
-      this.router.navigateByUrl('/home', {replaceUrl: true});
-    } else{
-      this.showAlert('Registration failed', 'Please try again!');
-    }
-  };
+  //   if(user){
+  //     this.router.navigateByUrl('/home', {replaceUrl: true});
+  //   } else{
+  //     this.showAlert('Registration failed', 'Please try again!');
+  //   }
+  // };
 
   async login() {
     const loading = await this.loadingController.create();

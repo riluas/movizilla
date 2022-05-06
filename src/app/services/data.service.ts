@@ -38,6 +38,12 @@ export class DataService {
     return collectionData(notesRef, {idField: 'id'});
   }
 
+  getUserData(){
+    const logedUser = this.auth.currentUser;
+    const email = logedUser.email;
+    return email;
+  }
+
   getTopRatedMovies(page = 1): Observable <ApiResult> {
     return this.http.get<ApiResult>(
       `${environment.baseUrl}/movie/popular?api_key=${environment.apiKey}&page=${page}`

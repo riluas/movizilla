@@ -1,0 +1,43 @@
+.loginnavbtn{
+    width: 60px;
+    height: 60px;
+    background-color: transparent;
+}
+
+#arrow{
+    font-size: 35px;
+    color: white;
+}
+h1{
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+    margin-top: 0px;
+}
+h4{
+    font-size: 16px;
+    margin-top: 30px;
+    margin-bottom: 0px;
+}
+ion-item{
+    margin-top: 0px;
+    font-size: 12px;
+    color: rgb(199, 199, 199);
+}
+.item-has-focus{
+    --highlight-background: white;
+    --color-focused: white !important;
+ }
+ .item-has-focus > ion-label{
+    --highlight-background: white;
+    color: white !important;
+ }
+ #loginButton{
+    margin-top: 20px;
+    margin-bottom: 15px;
+    height: 40px;
+    border-color: transparent;
+    color: rgb(43, 43, 43);
+    background-color: rgb(255 255 255 / 35%);
+    border-radius: 50px;
+}

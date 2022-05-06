@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../services/data.service';
+import { Auth } from '@angular/fire/auth';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { AlertController, LoadingController } from '@ionic/angular';
 
@@ -21,19 +22,23 @@ export class ProfilePage implements OnInit {
     private authService: AuthService,
     private dataService: DataService,
     private router: Router,
+    private auth: Auth,
     private loadingController: LoadingController,
     private alertController: AlertController
   ) {
     this.dataService.getUserProfile().subscribe((data) => {
       this.profile = data;
+  
     });
   }
 
   ngOnInit() {
+    
+    
     this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
     this.currentUser  ="Alfonso";
     this.userSurname = "Lamar Asis";
-    this.email = "prueba@prueba.es";
+    this.email = this.dataService.getUserData();
   }
 
   async logout(){
@@ -50,7 +55,6 @@ export class ProfilePage implements OnInit {
     });
  
     if (image) {
-      console.log("Entra");
       const loading = await this.loadingController.create();
       await loading.present();
  

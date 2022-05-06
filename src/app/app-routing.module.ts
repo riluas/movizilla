@@ -14,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
+    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule),
+    ...canActivate(redirectUnToLogin)
   },
   {
     path: 'home',
@@ -32,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: 'sing-up',
-    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule),
+    loadChildren: () => import('./sing-up/sing-up.module').then( m => m.SingUpPageModule)
   },
   {
     path: 'profile',
