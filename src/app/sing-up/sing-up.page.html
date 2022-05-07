@@ -46,17 +46,48 @@
 <ion-content>
   <form [formGroup]="singUpCredentials" (ngSubmit)="register()">
 
-    <ion-item fill="solid" class="ion-margin-bottom">
+    <h4 class="textCenter textWhite">Name</h4>
+    <ion-item class="textCenter userInput textWhite">
+      <ion-label position="stacked"></ion-label>
+      <ion-input type="text" placeholder="Name" formControlName="name"></ion-input>
+      <ion-note slot="error"*ngIf="(name.dirty || name.touched) && name.errors">Name is required</ion-note>
+    </ion-item>
+
+    <h4 class="textCenter textWhite">Surname</h4>
+    <ion-item class="textCenter userInput textWhite">
+      <ion-label position="floating"></ion-label>
+      <ion-input type="text" placeholder="Surname" formControlName="surname"></ion-input>
+      <ion-note slot="error"*ngIf="(surname.dirty || surname.touched) && surname.errors">Surname is required</ion-note>
+    </ion-item>
+
+    <h4 class="textCenter textWhite">Email</h4>
+    <ion-item class="textCenter userInput textWhite">
+      <ion-label position="floating"></ion-label>
       <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
       <ion-note slot="error"*ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
     </ion-item>
 
-    <ion-item fill="solid" class="ion-margin-bottom">
+    <h4 class="textCenter textWhite">Password</h4>
+    <ion-item class="textCenter userInput textWhite">
+      <ion-label position="floating"></ion-label>
       <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
       <ion-note slot="error"*ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!singUpCredentials.valid">Create account</ion-button>
+    <!-- <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+      <ion-note slot="error"*ngIf="(email.dirty || email.touched) && email.errors">Email is invalid</ion-note>
+    </ion-item> -->
+
+    <!-- <h4 class="textCenter textWhite">Password</h4>
+    <ion-item fill="solid" class="ion-margin-bottom">
+      <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+      <ion-note slot="error"*ngIf="(password.dirty || password.touched) && password.errors">Password needs to be 6 characters</ion-note>
+    </ion-item> -->
+
+    <div style="display: flex; justify-content: center;">
+      <ion-button id="loginButton" type="submit"  fill="clear"  [disabled]="!singUpCredentials.valid" >Create account</ion-button>
+    </div>
 
   </form>
 </ion-content>

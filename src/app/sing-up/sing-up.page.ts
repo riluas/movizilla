@@ -10,7 +10,6 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./sing-up.page.scss'],
 })
 export class SingUpPage implements OnInit {
-  image : string;
   singUpCredentials: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -27,11 +26,20 @@ export class SingUpPage implements OnInit {
   get password(){
     return this.singUpCredentials.get('password');
   }
+  
+  get name(){
+    return this.singUpCredentials.get('name');
+  }
+  get surname(){
+    return this.singUpCredentials.get('surname');
+  }
 
   ngOnInit() {
     this.singUpCredentials = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      name: ['', [Validators.required]],
+      surname: ['', [Validators.required]]
     });
   }
 
