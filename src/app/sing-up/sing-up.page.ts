@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 })
 export class SingUpPage implements OnInit {
   image : string;
-  credentials: FormGroup;
+  singUpCredentials: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private loadingController: LoadingController,
@@ -21,15 +21,15 @@ export class SingUpPage implements OnInit {
   ) { }
 
   get email(){
-    return this.credentials.get('email');
+    return this.singUpCredentials.get('email');
   }
 
   get password(){
-    return this.credentials.get('password');
+    return this.singUpCredentials.get('password');
   }
 
   ngOnInit() {
-    this.credentials = this.formBuilder.group({
+    this.singUpCredentials = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
@@ -39,7 +39,7 @@ export class SingUpPage implements OnInit {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    const user = await this.authService.register(this.credentials.value);
+    const user = await this.authService.register(this.singUpCredentials.value);
     await loading.dismiss();
 
     if(user){
