@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-sing-up',
@@ -16,6 +17,7 @@ export class SingUpPage implements OnInit {
     private loadingController: LoadingController,
     private alertController: AlertController,
     private authService: AuthService,
+    private dataService: DataService,
     private router: Router
   ) { }
 
@@ -41,17 +43,19 @@ export class SingUpPage implements OnInit {
       name: ['', [Validators.required]],
       surname: ['', [Validators.required]]
     });
+
+    
   }
 
     async register() {
     const loading = await this.loadingController.create();
     await loading.present();
-
     const user = await this.authService.register(this.singUpCredentials.value);
     await loading.dismiss();
 
     if(user){
       this.router.navigateByUrl('/home', {replaceUrl: true});
+      this.dataService.uploadUserData(this.singUpCredentials.value);
     } else{
       this.showAlert('Registration failed', 'Please try again!');
     }

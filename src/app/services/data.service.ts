@@ -63,6 +63,18 @@ export class DataService {
     return docData(userDocRef, { idField: 'id' });
   }
   
+
+  async uploadUserData(userData){
+    const name = userData['name'];
+    const surname = userData['surname'];
+    const user = this.auth.currentUser;
+    const userDocRef = doc(this.firestore, `users/${user.uid}`);
+    await setDoc(userDocRef, {
+      name,
+      surname,
+    });
+  }
+
   async uploadImage(cameraFile: Photo) {
     const user = this.auth.currentUser;
     const path = `uploads/${user.uid}/profile.png`;
@@ -72,7 +84,7 @@ export class DataService {
       await uploadString(storageRef, cameraFile.base64String, 'base64');
  
       const imageUrl = await getDownloadURL(storageRef);
- 
+
       const userDocRef = doc(this.firestore, `users/${user.uid}`);
       await setDoc(userDocRef, {
         imageUrl,
