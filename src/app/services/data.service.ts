@@ -37,6 +37,13 @@ export class DataService {
     const notesRef = collection(this.firestore, 'notes');
     return collectionData(notesRef, {idField: 'id'});
   }
+  //Load the collection of the user
+  getUser(){
+    const usersRef = collection(this.firestore, 'users');
+    console.log(collectionData(usersRef, {idField: this.auth.currentUser.uid}));
+    return collectionData(usersRef, {idField: this.auth.currentUser.uid});
+  }
+
 
   getUserData(){
     const logedUser = this.auth.currentUser;
