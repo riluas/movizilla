@@ -17,6 +17,8 @@ export class ProfilePage implements OnInit {
   userSurname: string;
   email: string;
   profile = null;
+  userName: string;
+  userLastName:string;
   
   constructor(
     private authService: AuthService,
@@ -28,7 +30,10 @@ export class ProfilePage implements OnInit {
   ) {
     this.dataService.getUserProfile().subscribe((data) => {
       this.profile = data;
-  
+    });
+    this.dataService.getUserById().subscribe(res => {
+      this.userName = res["name"];
+      this.userLastName = res["surname"];
     });
   }
 
@@ -36,8 +41,6 @@ export class ProfilePage implements OnInit {
     
     
     this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
-    this.currentUser  ="Alfonso";
-    this.userSurname = "Lamar Asis";
     this.email = this.dataService.getUserData();
   }
 
@@ -57,8 +60,8 @@ export class ProfilePage implements OnInit {
     if (image) {
       const loading = await this.loadingController.create();
       await loading.present();
- 
-      const result = await this.dataService.uploadImage(image);
+
+      const result = await this.dataService.uploadImage(image, this.userName, this.userLastName);
       loading.dismiss();
  
       if (!result) {

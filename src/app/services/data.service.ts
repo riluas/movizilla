@@ -21,6 +21,12 @@ export interface ApiResult{
   total_results: number;
 }
 
+export interface User{
+  id?: string;
+  name: string;
+  lastName: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,10 +46,13 @@ export class DataService {
   //Load the collection of the user
   getUser(){
     const usersRef = collection(this.firestore, 'users');
-    console.log(collectionData(usersRef, {idField: this.auth.currentUser.uid}));
     return collectionData(usersRef, {idField: this.auth.currentUser.uid});
   }
 
+  getUserById(): Observable<User>{    
+    const userDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}`);
+    return docData(userDocRef, {idField: 'id'}) as Observable<User>
+  }
 
   getUserData(){
     const logedUser = this.auth.currentUser;
@@ -82,7 +91,7 @@ export class DataService {
     });
   }
 
-  async uploadImage(cameraFile: Photo) {
+  async uploadImage(cameraFile: Photo, name, surname) {
     const user = this.auth.currentUser;
     const path = `uploads/${user.uid}/profile.png`;
     const storageRef = ref(this.storage, path);
@@ -95,6 +104,8 @@ export class DataService {
       const userDocRef = doc(this.firestore, `users/${user.uid}`);
       await setDoc(userDocRef, {
         imageUrl,
+        name,
+        surname,
       });
       return true;
     } catch (e) {

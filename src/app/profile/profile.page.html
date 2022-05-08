@@ -51,15 +51,15 @@
     </ion-avatar>
     <div *ngIf='!invitado'>
     <ion-button class="noBgButton"  (click)="changeImage()" expand="block" fill="clear" shape="round">
-      <span id="cambiarImagen" class="verdana textWhite">Cambiar imagen</span>
+      <span id="cambiarImagen" class="verdana textWhite">Change image</span>
     </ion-button>
     
   </div>
-    <p class="capitalize textWhite">Nombre<span class="dataPerfil">{{email}}</span></p>
+    <p class="capitalize textWhite">Name<span class="dataPerfil">{{userName}}</span></p>
     <hr class="line">
-    <p class="capitalize textWhite">Apellidos<span class="dataPerfil">{{apellidosUsuarioIniciado}}</span></p>
+    <p class="capitalize textWhite">Surname<span class="dataPerfil">{{userLastName}}</span></p>
     <hr class="line">
-    <p class="capitalize textWhite">Email<span class="dataPerfil">{{UsuarioIniciado}}</span></p>
+    <p class="capitalize textWhite">Email<span class="dataPerfil">{{email}}</span></p>
     <hr class="line">
     <ion-button name="log-out" id="desconectarse" (click)="logout()" expand="block" color="danger" fill="clear" shape="round">
       Log out
