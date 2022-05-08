@@ -56,7 +56,7 @@ export class SingUpPage implements OnInit {
     if(user){
       this.router.navigateByUrl('/home', {replaceUrl: true});
       this.dataService.getUser();
-      // this.dataService.uploadUserData(this.singUpCredentials.value);
+      this.dataService.uploadUserData(this.singUpCredentials.value);
     } else{
       this.showAlert('Registration failed', 'Please try again!');
     }
