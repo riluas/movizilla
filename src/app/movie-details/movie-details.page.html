@@ -13,7 +13,12 @@
     <img [src]="imageBaseUrl + '/w400' + movie.poster_path">
 
     <ion-card-header>
-      <ion-card-title>{{movie.title}}</ion-card-title>
+      <ion-card-title>{{movie.title}}
+        <ion-button class="noBgButton" id="favButton" color="danger" fill="clear" shape="round" (click)="liked()">
+          <ion-icon class="main-button" [name]="meGustaIcon ? 'heart' : 'heart-outline'"></ion-icon>
+        </ion-button>
+      </ion-card-title>
+
       <ion-card-subtitle>{{movie.tagline}}</ion-card-subtitle>
       <ion-text color="tertiary">
         <span *ngFor="let g of movie.genres; let isLast = last">
@@ -24,7 +29,7 @@
 
     <ion-card-content>
       <ion-label color="medium">{{ movie.overview }}</ion-label>
-      
+
       <ion-item lines="none">
         <ion-icon slot="start" name="calendar-outline"></ion-icon>
         <ion-label>{{ movie.release_date | date: 'y' }}</ion-label>

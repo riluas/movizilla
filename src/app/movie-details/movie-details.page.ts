@@ -10,18 +10,34 @@ import { DataService } from '../services/data.service';
 })
 export class MovieDetailsPage implements OnInit {
   movie = null;
+  meGustaIcon = false;
   imageBaseUrl = environment.images;
-  
-  constructor(private route: ActivatedRoute, private dataService: DataService) { }
+  res: any;
+  constructor(private route: ActivatedRoute, private dataService: DataService) { 
+    this.dataService.getLikedMovies().subscribe(res => {
+      this.res = res;
+    });
+  }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    this.dataService.getMovieDetails(id).subscribe((res) =>{
+    console.log(id);
+    this.dataService.getMovieDetails(id).subscribe((res) => {
       console.log(res);
       this.movie = res;
-      
     });
-    
   }
+
+  liked() {
+    if (this.meGustaIcon) {
+      this.meGustaIcon = false;
+    }
+    else {
+      this.meGustaIcon = true;
+      this.dataService.getLikedMovies();
+      console.log(this.res);
+      this.dataService.uploadLiked();
+    }
+  };
 
 }

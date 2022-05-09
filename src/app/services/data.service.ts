@@ -43,6 +43,11 @@ export class DataService {
     const notesRef = collection(this.firestore, 'notes');
     return collectionData(notesRef, {idField: 'id'});
   }
+
+  getLikedMovies(){
+    const likedDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}/liked/movieId`);
+    return docData(likedDocRef)
+  }
   //Load the collection of the user
   getUser(){
     const usersRef = collection(this.firestore, 'users');
@@ -112,4 +117,19 @@ export class DataService {
       return null;
     }
   }
+
+  async uploadLiked() {
+    const user = this.auth.currentUser;
+    try {
+      const ids = ["hola", "preuba"];
+      const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
+      await setDoc(userDocRef, {
+        ids,
+      });
+      return true;
+    } catch (e) {
+      return null;
+    }
+  }
+
 }

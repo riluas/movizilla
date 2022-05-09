@@ -18,8 +18,8 @@ export class ProfilePage implements OnInit {
   email: string;
   profile = null;
   userName: string;
-  userLastName:string;
-  
+  userLastName: string;
+
   constructor(
     private authService: AuthService,
     private dataService: DataService,
@@ -38,17 +38,17 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    
-    
+
+
     this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
     this.email = this.dataService.getUserData();
   }
 
-  async logout(){
+  async logout() {
     await this.authService.logout();
-    this.router.navigateByUrl('/',{replaceUrl: true }); 
+    this.router.navigateByUrl('/', { replaceUrl: true });
   };
-  
+
   async changeImage() {
     const image = await Camera.getPhoto({
       quality: 90,
@@ -56,14 +56,14 @@ export class ProfilePage implements OnInit {
       resultType: CameraResultType.Base64,
       source: CameraSource.Photos, // Camera, Photos or Prompt!
     });
- 
+
     if (image) {
       const loading = await this.loadingController.create();
       await loading.present();
 
       const result = await this.dataService.uploadImage(image, this.userName, this.userLastName);
       loading.dismiss();
- 
+
       if (!result) {
         const alert = await this.alertController.create({
           header: 'Upload failed',
