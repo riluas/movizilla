@@ -30,6 +30,8 @@ export class MovieDetailsPage implements OnInit {
 
   arrayLiked(movieId, delet) {
     if (this.resLikedMovies.ids) {
+      console.log("aaaa");
+      
       let index = 0;
       this.resLikedMovies.ids.forEach(element => {
         if (element == movieId && delet) {
@@ -58,7 +60,7 @@ export class MovieDetailsPage implements OnInit {
     
     if (this.meGustaIcon) {
       this.arrayLiked(this.movieId, true);
-      this.dataService.uploadLiked(this.resLikedMovies, this.movieId, false);
+      this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, false);
       this.meGustaIcon = false;
     }
     else {
