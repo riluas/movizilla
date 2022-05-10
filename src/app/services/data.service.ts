@@ -121,13 +121,10 @@ export class DataService {
   async uploadLiked(arrayMovies, movieId, push) {
     const user = this.auth.currentUser;
     try {
-      const ids = arrayMovies;
+        const ids = arrayMovies;
       if (push) {
         ids.push(movieId);
       }
-      console.log("Los recojo en el upload: ");
-      console.log(arrayMovies);
-      console.log("////////////");
       const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
       await setDoc(userDocRef, {
         ids,
