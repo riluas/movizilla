@@ -29,28 +29,33 @@ export class MovieDetailsPage implements OnInit {
   }
 
   arrayLiked(movieId, delet) {
-    let index = 0;
-    this.resLikedMovies.ids.forEach(element => {
-      if (element == movieId && delet) {
-        this.resLikedMovies.ids.splice(index, 1);
-        console.log(element);
-        console.log("///--//");
-        console.log(this.resLikedMovies);
-        console.log("///***///");
-      }
-      if (element == movieId){
-        console.log(element);
-        this.meGustaIcon = true;
-      }
-      index++;
-    });
-
-
-
+    if (this.resLikedMovies.ids) {
+      let index = 0;
+      this.resLikedMovies.ids.forEach(element => {
+        if (element == movieId && delet) {
+          this.resLikedMovies.ids.splice(index, 1);
+          console.log(element);
+          console.log("///--//");
+          console.log(this.resLikedMovies);
+          console.log("///***///");
+        }
+        if (element == movieId) {
+          console.log(element);
+          this.meGustaIcon = true;
+        }
+        index++;
+      });
+    }
+    else {
+      this.resLikedMovies = [];
+    }
 
   }
 
   liked() {
+
+    console.log(this.resLikedMovies.ids);
+    
     if (this.meGustaIcon) {
       this.arrayLiked(this.movieId, true);
       this.dataService.uploadLiked(this.resLikedMovies, this.movieId, false);
@@ -58,8 +63,12 @@ export class MovieDetailsPage implements OnInit {
     }
     else {
       this.meGustaIcon = true;
-      // this.arrayLiked(this.movieId);
-      this.dataService.uploadLiked(this.resLikedMovies, this.movieId, true);
+      this.resLikedMovies = [];
+      this.arrayLiked(this.movieId, false);
+      console.log("else");
+      console.log(this.resLikedMovies);
+      
+      this.dataService.uploadLiked("this.resLikedMoviess", this.movieId, true);
     }
   };
 
