@@ -121,7 +121,7 @@ export class DataService {
   async uploadLiked(arrayMovies, movieId, push) {
     const user = this.auth.currentUser;
     try {
-      const ids = ["hola", "preuba"];
+      const ids = arrayMovies;
       if (push) {
         ids.push(movieId);
       }

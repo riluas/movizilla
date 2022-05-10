@@ -63,12 +63,12 @@ export class MovieDetailsPage implements OnInit {
     }
     else {
       this.meGustaIcon = true;
-      this.resLikedMovies = [];
       this.arrayLiked(this.movieId, false);
-      console.log("else");
-      console.log(this.resLikedMovies);
-      
-      this.dataService.uploadLiked("this.resLikedMoviess", this.movieId, true);
+      console.log("else1");
+      console.log(this.resLikedMovies.ids);      
+      this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, true);
+      console.log("else2");
+      console.log(this.resLikedMovies.ids);
     }
   };
 
