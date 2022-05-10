@@ -14,14 +14,14 @@ import {
 import { Photo } from '@capacitor/camera';
 
 
-export interface ApiResult{
+export interface ApiResult {
   page: number;
   results: any[];
   total_pages: number;
   total_results: number;
 }
 
-export interface User{
+export interface User {
   id?: string;
   name: string;
   lastName: string;
@@ -33,59 +33,59 @@ export interface User{
 export class DataService {
 
   constructor(
-    private firestore:Firestore,
+    private firestore: Firestore,
     private http: HttpClient,
     private auth: Auth,
     private storage: Storage
-    ) { }
+  ) { }
 
-  getNotes(){
+  getNotes() {
     const notesRef = collection(this.firestore, 'notes');
-    return collectionData(notesRef, {idField: 'id'});
+    return collectionData(notesRef, { idField: 'id' });
   }
 
-  getLikedMovies(){
+  getLikedMovies() {
     const likedDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}/liked/movieId`);
     return docData(likedDocRef)
   }
   //Load the collection of the user
-  getUser(){
+  getUser() {
     const usersRef = collection(this.firestore, 'users');
-    return collectionData(usersRef, {idField: this.auth.currentUser.uid});
+    return collectionData(usersRef, { idField: this.auth.currentUser.uid });
   }
 
-  getUserById(): Observable<User>{    
+  getUserById(): Observable<User> {
     const userDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}`);
-    return docData(userDocRef, {idField: 'id'}) as Observable<User>
+    return docData(userDocRef, { idField: 'id' }) as Observable<User>
   }
 
-  getUserData(){
+  getUserData() {
     const logedUser = this.auth.currentUser;
     const email = logedUser.email;
     return email;
   }
 
-  getTopRatedMovies(page = 1): Observable <ApiResult> {
+  getTopRatedMovies(page = 1): Observable<ApiResult> {
     return this.http.get<ApiResult>(
       `${environment.baseUrl}/movie/popular?api_key=${environment.apiKey}&page=${page}`
-      );
+    );
   };
   getMovieDetails(id: string) {
     return this.http.get(
       `${environment.baseUrl}/movie/${id}?api_key=${environment.apiKey}`
-      );
+    );
   }
 
 
   //To upload images
   getUserProfile() {
     const user = this.auth.currentUser;
-    const userDocRef = doc(this.firestore, `users/${user.uid}`);   
+    const userDocRef = doc(this.firestore, `users/${user.uid}`);
     return docData(userDocRef, { idField: 'id' });
   }
-  
 
-  async uploadUserData(userData){
+
+  async uploadUserData(userData) {
     const name = userData['name'];
     const surname = userData['surname'];
     const user = this.auth.currentUser;
@@ -100,10 +100,10 @@ export class DataService {
     const user = this.auth.currentUser;
     const path = `uploads/${user.uid}/profile.png`;
     const storageRef = ref(this.storage, path);
- 
+
     try {
       await uploadString(storageRef, cameraFile.base64String, 'base64');
- 
+
       const imageUrl = await getDownloadURL(storageRef);
 
       const userDocRef = doc(this.firestore, `users/${user.uid}`);
@@ -118,10 +118,16 @@ export class DataService {
     }
   }
 
-  async uploadLiked() {
+  async uploadLiked(arrayMovies, movieId, push) {
     const user = this.auth.currentUser;
     try {
       const ids = ["hola", "preuba"];
+      if (push) {
+        ids.push(movieId);
+      }
+      console.log("Los recojo en el upload: ");
+      console.log(arrayMovies);
+      console.log("////////////");
       const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
       await setDoc(userDocRef, {
         ids,
