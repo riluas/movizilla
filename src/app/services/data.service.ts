@@ -76,7 +76,6 @@ export class DataService {
     );
   }
 
-
   //To upload images
   getUserProfile() {
     const user = this.auth.currentUser;
