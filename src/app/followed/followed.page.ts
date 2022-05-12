@@ -25,19 +25,12 @@ export class FollowedPage implements OnInit {
       else {
         this.resLikedMovies = false;
       }
-      console.log(this.resLikedMovies);
-      //Optimizar, al hacer el subscribe esto me vuelve a cargar aunque este en otra pagina. Ponerlo fuera es buena idea y poner un boton de volver atras y que vuelva a cargar las movies().
       this.loadMovies();
     });
 
   }
 
   async loadMovies(event?: InfiniteScrollCustomEvent) {
-    const loading = await this.loadingController.create({
-      message: 'Loading..',
-      spinner: 'bubbles',
-    })
-    await loading.present();
     this.movies = [];
     if (this.resLikedMovies != false) {
       if (this.resLikedMovies.ids.length > 0) {
@@ -50,12 +43,11 @@ export class FollowedPage implements OnInit {
         });
       }
     }
-    else{
+    else {
       console.log("nada");
     }
-    loading.dismiss();
   }
-
+//Resolver loading more data
   loadMore(event: InfiniteScrollCustomEvent) {
     this.currentPage++;
     this.loadMovies(event);
