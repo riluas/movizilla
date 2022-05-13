@@ -117,6 +117,8 @@ export class DataService {
     }
   }
 
+
+  //Set like or undo like
   async uploadLiked(arrayMovies, movieId, push) {
     const user = this.auth.currentUser;
     try {
@@ -132,6 +134,32 @@ export class DataService {
     } catch (e) {
       return null;
     }
+  }
+
+  async uploadComment(comment,movieId) {
+    const userId = this.auth.currentUser.uid;
+    const usercomment = comment;
+    const user = this.auth.currentUser;
+    const userDocRef = doc(this.firestore, `comments/${movieId}`);
+    const arrayComments= [{userId :userId, userComment: usercomment},{"userComment":usercomment}];
+    await setDoc(userDocRef, {
+      arrayComments,
+    });
+    console.log("comment from dataService: "+comment);
+    
+    // try {
+    //     const ids = arrayMovies;
+    //   if (push) {
+    //     ids.push(movieId);
+    //   }
+    //   const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
+    //   await setDoc(userDocRef, {
+    //     ids,
+    //   });
+    //   return true;
+    // } catch (e) {
+    //   return null;
+    // }
   }
 
 }

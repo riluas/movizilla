@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../services/data.service';
@@ -14,8 +15,9 @@ export class MovieDetailsPage implements OnInit {
   imageBaseUrl = environment.images;
   movieId: string;
   resLikedMovies: any;
+  comments: FormGroup;
 
-  constructor(private route: ActivatedRoute, private dataService: DataService) {
+  constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder,) {
     this.dataService.getLikedMovies().subscribe(res => {
       this.resLikedMovies = res;
       this.movieId = this.route.snapshot.paramMap.get('id');
@@ -23,13 +25,27 @@ export class MovieDetailsPage implements OnInit {
     });
   }
 
+  get comment(){
+    return this.comments.get('comment');
+  }
+
   ngOnInit() {
     this.movieId = this.route.snapshot.paramMap.get('id');
     this.dataService.getMovieDetails(this.movieId).subscribe((res) => {
       this.movie = res;
     });
+    this.comments = this.formBuilder.group({
+      comment: ['', [Validators.minLength(1)]],
+    });
   }
 
+
+  async userComment() {
+    this.dataService.uploadComment(this.comments.value["comment"],this.movieId)
+  };
+
+  
+  //Set like or undo like
   arrayLiked(movieId, delet) {
     
     if(!this.resLikedMovies){
@@ -54,11 +70,13 @@ export class MovieDetailsPage implements OnInit {
 
   liked() {
     if (this.likeIcon) {
+      //Undo like
       this.arrayLiked(this.movieId, true);
       this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, false);
       this.likeIcon = false;
     }
     else {
+       //Like
       this.arrayLiked(this.movieId, false);
       this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, true);
       this.likeIcon = true;

@@ -41,4 +41,93 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
+
+  <form [formGroup]="comments" (ngSubmit)="userComment()">
+
+    <ion-item  fill="solid" class="ion-margin-bottom">
+      <ion-label position="stacked"></ion-label>
+      <ion-input type="text" placeholder="Comment" formControlName="comment"></ion-input>
+      <ion-note slot="error"*ngIf="(comment.dirty || comment.touched) && comment.errors">Name is required</ion-note>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="!comments.valid">Comment</ion-button>
+
+  </form>
+
+
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        This is content, without any paragraph or header tags,
+        within an ion-card-content element.
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
+        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
+      </ion-card-content>
+    </ion-card>
+
 </ion-content>
