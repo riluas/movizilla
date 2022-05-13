@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { InfiniteScrollCustomEvent, LoadingController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-followed',
@@ -15,7 +16,7 @@ export class FollowedPage implements OnInit {
   imageBaseUrl = environment.images;
   resLikedMovies: any;
 
-  constructor(private dataService: DataService, private loadingController: LoadingController) { }
+  constructor(private dataService: DataService, private loadingController: LoadingController, private router: Router) { }
 
   ngOnInit() {
     this.dataService.getLikedMovies().subscribe(res => {
@@ -28,9 +29,19 @@ export class FollowedPage implements OnInit {
       this.loadMovies();
     });
 
+    console.log(this.router.url);
+    
+
   }
 
-  async loadMovies(event?: InfiniteScrollCustomEvent) {
+  async loadMovies() {
+    const loading = await this.loadingController.create({
+      message: 'Loading..',
+      spinner: 'bubbles',
+    })
+    if(this.router.url == "/followed"){
+      await loading.present();
+    }
     this.movies = [];
     if (this.resLikedMovies != false) {
       if (this.resLikedMovies.ids.length > 0) {
@@ -43,14 +54,6 @@ export class FollowedPage implements OnInit {
         });
       }
     }
-    else {
-      console.log("nada");
-    }
+    loading.dismiss();
   }
-//Resolver loading more data
-  loadMore(event: InfiniteScrollCustomEvent) {
-    this.currentPage++;
-    this.loadMovies(event);
-  }
-
 }
