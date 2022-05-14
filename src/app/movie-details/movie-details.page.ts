@@ -15,6 +15,7 @@ export class MovieDetailsPage implements OnInit {
   imageBaseUrl = environment.images;
   movieId: string;
   resLikedMovies: any;
+  commentsArray: any;
   comments: FormGroup;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder,) {
@@ -22,6 +23,10 @@ export class MovieDetailsPage implements OnInit {
       this.resLikedMovies = res;
       this.movieId = this.route.snapshot.paramMap.get('id');
       this.arrayLiked(this.movieId, false)
+    });
+
+    this.dataService.getComments(this.route.snapshot.paramMap.get('id')).subscribe(res => {
+      this.commentsArray = res;      
     });
   }
 
@@ -41,7 +46,9 @@ export class MovieDetailsPage implements OnInit {
 
 
   async userComment() {
-    this.dataService.uploadComment(this.comments.value["comment"],this.movieId)
+    console.log(this.commentsArray);
+    
+    this.dataService.uploadComment(this.comments.value["comment"],this.movieId,this.commentsArray)
   };
 
   

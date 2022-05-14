@@ -27,10 +27,17 @@ export interface User {
   lastName: string;
 }
 
+export interface Comment {
+  userId: string;
+  userComment: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
+  aa: Comment[];
 
   constructor(
     private firestore: Firestore,
@@ -46,6 +53,11 @@ export class DataService {
 
   getLikedMovies() {
     const likedDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}/liked/movieId`);
+    return docData(likedDocRef)
+  }
+
+  getComments(movieId) {
+    const likedDocRef = doc(this.firestore, `comments/${movieId}`);
     return docData(likedDocRef)
   }
   //Load the collection of the user
@@ -122,7 +134,7 @@ export class DataService {
   async uploadLiked(arrayMovies, movieId, push) {
     const user = this.auth.currentUser;
     try {
-        const ids = arrayMovies;
+      const ids = arrayMovies;
       if (push) {
         ids.push(movieId);
       }
@@ -136,30 +148,66 @@ export class DataService {
     }
   }
 
-  async uploadComment(comment,movieId) {
+  async uploadComment2(comment, movieId,commentsArray) {
+    // const userId = this.auth.currentUser.uid;
+    // const usercomment = comment;
+    // // console.log(this.getComments(movieId));
+    // const userDocRef = doc(this.firestore, `comments/${movieId}`);
+    // const arrayComments = [{ userId: userId, userComment: usercomment }];
+    // await setDoc(userDocRef, {
+    //   arrayComments,
+    // });
     const userId = this.auth.currentUser.uid;
     const usercomment = comment;
-    const user = this.auth.currentUser;
+    console.log("-----");
+    if(!commentsArray["arrayComments"]){
+      console.log("no existe");
+      
+    }
+    commentsArray["arrayComments"].push({userId :userId, userComment: usercomment});
+    console.log(commentsArray["arrayComments"].length);
+    console.log("-----");
+    // console.log(this.getComments(movieId));
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    const arrayComments= [{userId :userId, userComment: usercomment},{"userComment":usercomment}];
+    const arrayComments= [commentsArray["arrayComments"]];
     await setDoc(userDocRef, {
       arrayComments,
     });
-    console.log("comment from dataService: "+comment);
+
+  }
+
+  async uploadComment(comment, movieId, movieArrayComments) {
+    const userId = this.auth.currentUser.uid;
+    const usercomment = comment;
+    let arrayComments;
+    //check if the movie has any comments
+    if(movieArrayComments && (Object.keys(movieArrayComments).length === 0)){
+      let newArrayComments  = [];
+      newArrayComments.push({ userId: userId, userComment: usercomment });
+      arrayComments = newArrayComments;
+      console.log("---IF---");
+      console.log(arrayComments);
+      console.log("---IF---");
+    }
+    else{
+    //Arreglar esto. Me esta creando otro array dentro del array. El if Es correcto falla el else
+    movieArrayComments["arrayComments"].push({ userId: userId, userComment: usercomment });
+    arrayComments = movieArrayComments;
+    console.log("---ELSE---");
+    console.log(arrayComments);
+    console.log("---ELSE---");
+    }
+ 
+
+    console.log(this.getComments(movieId));
+    const userDocRef = doc(this.firestore, `comments/${movieId}`);
+    // const arrayComments = [movieArrayComments];
     
-    // try {
-    //     const ids = arrayMovies;
-    //   if (push) {
-    //     ids.push(movieId);
-    //   }
-    //   const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
-    //   await setDoc(userDocRef, {
-    //     ids,
-    //   });
-    //   return true;
-    // } catch (e) {
-    //   return null;
-    // }
+
+    await setDoc(userDocRef, {
+      arrayComments,
+    });
+
   }
 
 }
