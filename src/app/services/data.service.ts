@@ -27,17 +27,10 @@ export interface User {
   lastName: string;
 }
 
-export interface Comment {
-  userId: string;
-  userComment: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-
-  aa: Comment[];
 
   constructor(
     private firestore: Firestore,
@@ -148,66 +141,27 @@ export class DataService {
     }
   }
 
-  async uploadComment2(comment, movieId, commentsArray) {
-    // const userId = this.auth.currentUser.uid;
-    // const usercomment = comment;
-    // // console.log(this.getComments(movieId));
-    // const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    // const arrayComments = [{ userId: userId, userComment: usercomment }];
-    // await setDoc(userDocRef, {
-    //   arrayComments,
-    // });
-    const userId = this.auth.currentUser.uid;
-    const usercomment = comment;
-    console.log("-----");
-    if (!commentsArray["arrayComments"]) {
-      console.log("no existe");
-
-    }
-    commentsArray["arrayComments"].push({ userId: userId, userComment: usercomment });
-    console.log(commentsArray["arrayComments"].length);
-    console.log("-----");
-    // console.log(this.getComments(movieId));
-    const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    const arrayComments = [commentsArray["arrayComments"]];
-    await setDoc(userDocRef, {
-      arrayComments,
-    });
-
-  }
-
   async uploadComment(comment, movieId, movieArrayComments) {
     const userId = this.auth.currentUser.uid;
     const usercomment = comment;
     let arrayComments;
     let newArrayComments = [];
+    //if there's no collection or the object is undefined, create one
     if (movieArrayComments === undefined) {
       newArrayComments.push({ userId: userId, userComment: usercomment });
       arrayComments = newArrayComments;
     } else {
-      console.log("No Vacio");
       //check if the movie has any comments
       if (movieArrayComments && (Object.keys(movieArrayComments).length === 0)) {
         newArrayComments.push({ userId: userId, userComment: usercomment });
         arrayComments = newArrayComments;
-        console.log("---IF---");
-        console.log(arrayComments);
-        console.log("---IF---");
       }
       else {
         movieArrayComments.arrayComments.push({ userId: userId, userComment: usercomment });
         arrayComments = movieArrayComments.arrayComments;
-        console.log("---ELSE---");
-        console.log(arrayComments);
-        console.log("---ELSE---");
       }
     }
-
-    console.log(this.getComments(movieId));
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    // const arrayComments = [movieArrayComments];
-
-
     await setDoc(userDocRef, {
       arrayComments,
     });
