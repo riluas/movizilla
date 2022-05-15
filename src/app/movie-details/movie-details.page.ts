@@ -45,9 +45,7 @@ export class MovieDetailsPage implements OnInit {
   }
 
 
-  async userComment() {
-    console.log(this.commentsArray);
-    
+  async userComment() {    
     this.dataService.uploadComment(this.comments.value["comment"],this.movieId,this.commentsArray)
   };
 

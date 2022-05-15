@@ -180,6 +180,7 @@ export class DataService {
     const userId = this.auth.currentUser.uid;
     const usercomment = comment;
     let arrayComments;
+
     //check if the movie has any comments
     if(movieArrayComments && (Object.keys(movieArrayComments).length === 0)){
       let newArrayComments  = [];
@@ -190,9 +191,8 @@ export class DataService {
       console.log("---IF---");
     }
     else{
-    //Arreglar esto. Me esta creando otro array dentro del array. El if Es correcto falla el else
-    movieArrayComments["arrayComments"].push({ userId: userId, userComment: usercomment });
-    arrayComments = movieArrayComments;
+    movieArrayComments.arrayComments.push({ userId: userId, userComment: usercomment });
+    arrayComments = movieArrayComments.arrayComments;
     console.log("---ELSE---");
     console.log(arrayComments);
     console.log("---ELSE---");
