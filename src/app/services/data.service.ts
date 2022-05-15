@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { collection } from '@firebase/firestore';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { empty, Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import { collectionData, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
@@ -148,7 +148,7 @@ export class DataService {
     }
   }
 
-  async uploadComment2(comment, movieId,commentsArray) {
+  async uploadComment2(comment, movieId, commentsArray) {
     // const userId = this.auth.currentUser.uid;
     // const usercomment = comment;
     // // console.log(this.getComments(movieId));
@@ -160,16 +160,16 @@ export class DataService {
     const userId = this.auth.currentUser.uid;
     const usercomment = comment;
     console.log("-----");
-    if(!commentsArray["arrayComments"]){
+    if (!commentsArray["arrayComments"]) {
       console.log("no existe");
-      
+
     }
-    commentsArray["arrayComments"].push({userId :userId, userComment: usercomment});
+    commentsArray["arrayComments"].push({ userId: userId, userComment: usercomment });
     console.log(commentsArray["arrayComments"].length);
     console.log("-----");
     // console.log(this.getComments(movieId));
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    const arrayComments= [commentsArray["arrayComments"]];
+    const arrayComments = [commentsArray["arrayComments"]];
     await setDoc(userDocRef, {
       arrayComments,
     });
@@ -180,29 +180,33 @@ export class DataService {
     const userId = this.auth.currentUser.uid;
     const usercomment = comment;
     let arrayComments;
-
-    //check if the movie has any comments
-    if(movieArrayComments && (Object.keys(movieArrayComments).length === 0)){
-      let newArrayComments  = [];
+    let newArrayComments = [];
+    if (movieArrayComments === undefined) {
       newArrayComments.push({ userId: userId, userComment: usercomment });
       arrayComments = newArrayComments;
-      console.log("---IF---");
-      console.log(arrayComments);
-      console.log("---IF---");
+    } else {
+      console.log("No Vacio");
+      //check if the movie has any comments
+      if (movieArrayComments && (Object.keys(movieArrayComments).length === 0)) {
+        newArrayComments.push({ userId: userId, userComment: usercomment });
+        arrayComments = newArrayComments;
+        console.log("---IF---");
+        console.log(arrayComments);
+        console.log("---IF---");
+      }
+      else {
+        movieArrayComments.arrayComments.push({ userId: userId, userComment: usercomment });
+        arrayComments = movieArrayComments.arrayComments;
+        console.log("---ELSE---");
+        console.log(arrayComments);
+        console.log("---ELSE---");
+      }
     }
-    else{
-    movieArrayComments.arrayComments.push({ userId: userId, userComment: usercomment });
-    arrayComments = movieArrayComments.arrayComments;
-    console.log("---ELSE---");
-    console.log(arrayComments);
-    console.log("---ELSE---");
-    }
- 
 
     console.log(this.getComments(movieId));
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
     // const arrayComments = [movieArrayComments];
-    
+
 
     await setDoc(userDocRef, {
       arrayComments,
