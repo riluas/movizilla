@@ -55,79 +55,35 @@
   </form>
 
 
-    <ion-card>
+
+  <!-- <ion-col size="12" size-xs="6"  size-sm="6" size-md="4" size-lg="3" *ngFor="let item of movies; let i = index" >
+    <ion-card [routerLink]=" [item.id]">
+      <img [src]="imageBaseUrl + '/w400' + item.poster_path" />
+      <ion-card-header>
+        <ion-card-title class="movieTitle">{{item.title}}</ion-card-title>
+        <ion-card-subtitle>
+          {{item.release_date ? (item.release_date | date:'d/M/yy') : 'No data' }}
+          <ion-badge color="primary">{{item.vote_average}}</ion-badge>
+        </ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+  </ion-col> -->
+
+
+    
+    <ion-card  *ngFor="let item of commentsCard; let i = index">
       <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
+        {{item}}
       </ion-card-content>
     </ion-card>
-    <ion-card>
+
+    <ion-card *ngIf="commentsCard.length == 0">
       <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
+        MIAU
       </ion-card-content>
     </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
-    <ion-card>
-      <ion-card-content>
-        This is content, without any paragraph or header tags,
-        within an ion-card-content element.
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est asperiores quis corporis eaque sed sint, possimus
-        excepturi animi! Et tenetur quas sint earum dignissimos aperiam nihil odio possimus dolores ea.
-      </ion-card-content>
-    </ion-card>
+
+
+    
 
 </ion-content>

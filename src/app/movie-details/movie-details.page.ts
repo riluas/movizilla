@@ -17,6 +17,7 @@ export class MovieDetailsPage implements OnInit {
   resLikedMovies: any;
   commentsArray: any;
   comments: FormGroup;
+  commentsCard = [];
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder,) {
     this.dataService.getLikedMovies().subscribe(res => {
@@ -24,13 +25,9 @@ export class MovieDetailsPage implements OnInit {
       this.movieId = this.route.snapshot.paramMap.get('id');
       this.arrayLiked(this.movieId, false)
     });
-
-    this.dataService.getComments(this.route.snapshot.paramMap.get('id')).subscribe(res => {
-      this.commentsArray = res;      
-    });
   }
 
-  get comment(){
+  get comment() {
     return this.comments.get('comment');
   }
 
@@ -39,21 +36,32 @@ export class MovieDetailsPage implements OnInit {
     this.dataService.getMovieDetails(this.movieId).subscribe((res) => {
       this.movie = res;
     });
+    this.dataService.getComments(this.route.snapshot.paramMap.get('id')).subscribe((res) => {
+      this.commentsArray = res;
+      if (this.commentsArray) {
+        this.commentsCard = [];
+        this.commentsArray.arrayComments.forEach(element => {
+          this.commentsCard.push(element.userComment);
+        });
+      }else{
+        console.log("Ta basio");
+      }
+
+    });
     this.comments = this.formBuilder.group({
       comment: ['', [Validators.minLength(1)]],
     });
   }
 
-
-  async userComment() {    
-    this.dataService.uploadComment(this.comments.value["comment"],this.movieId,this.commentsArray)
+  async userComment() {
+    this.dataService.uploadComment(this.comments.value["comment"], this.movieId, this.commentsArray);
   };
 
-  
+
   //Set like or undo like
   arrayLiked(movieId, delet) {
-    
-    if(!this.resLikedMovies){
+
+    if (!this.resLikedMovies) {
       this.resLikedMovies = [];
     }
     if (this.resLikedMovies.ids) {
@@ -81,7 +89,7 @@ export class MovieDetailsPage implements OnInit {
       this.likeIcon = false;
     }
     else {
-       //Like
+      //Like
       this.arrayLiked(this.movieId, false);
       this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, true);
       this.likeIcon = true;
