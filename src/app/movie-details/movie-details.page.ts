@@ -18,12 +18,19 @@ export class MovieDetailsPage implements OnInit {
   commentsArray: any;
   comments: FormGroup;
   commentsCard = [];
+  userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
+  commentsAvatar = [];
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder,) {
     this.dataService.getLikedMovies().subscribe(res => {
       this.resLikedMovies = res;
       this.movieId = this.route.snapshot.paramMap.get('id');
       this.arrayLiked(this.movieId, false)
+    });
+    this.dataService.getUser().subscribe((data) => {
+      data.forEach(element => {
+        this.commentsAvatar.push({ userId: element.BhdH20pmXHQ4OnOz2nFk3UKtKas2, imageURL: element.imageUrl });
+      });
     });
   }
 
@@ -41,12 +48,11 @@ export class MovieDetailsPage implements OnInit {
       if (this.commentsArray) {
         this.commentsCard = [];
         this.commentsArray.arrayComments.forEach(element => {
-          this.commentsCard.push(element.userComment);
+          this.commentsCard.push({ userId: element.userId, comment: element.userComment });
         });
-      }else{
+      } else {
         console.log("Ta basio");
       }
-
     });
     this.comments = this.formBuilder.group({
       comment: ['', [Validators.minLength(1)]],
@@ -96,4 +102,15 @@ export class MovieDetailsPage implements OnInit {
     }
   };
 
+  //Get the avatar from the userId of the comment
+  getCommentUserPhoto(userId) {
+    let imageFromUser;
+    this.commentsAvatar.forEach(element => {
+      if (userId == element.userId) {
+        imageFromUser = element.imageURL;
+        console.log(element);
+      }
+    });
+    return imageFromUser;
+  }
 }

@@ -72,14 +72,22 @@
 
     
     <ion-card  *ngFor="let item of commentsCard; let i = index">
+      <ion-avatar class="avatar" >
+        <img *ngIf="profile?.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
+        <ng-template #placheolder_avatar>
+          <ion-avatar class="avatar" >
+            <img id="avatar" src={{getCommentUserPhoto(item.userId)}}>
+          </ion-avatar>
+        </ng-template>
+      </ion-avatar>
       <ion-card-content>
-        {{item}}
+        {{item.comment}}
       </ion-card-content>
     </ion-card>
 
     <ion-card *ngIf="commentsCard.length == 0">
       <ion-card-content>
-        MIAU
+        Be the first to leave a comment!!
       </ion-card-content>
     </ion-card>
 

@@ -38,8 +38,6 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
     this.email = this.dataService.getUserData();
   }
