@@ -59,8 +59,8 @@ export class DataService {
     return collectionData(usersRef, { idField: this.auth.currentUser.uid });
   }
 
-  getUserById(): Observable<User> {
-    const userDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}`);
+  getUserById(userId): Observable<User> {
+    const userDocRef = doc(this.firestore, `users/${userId}`);
     return docData(userDocRef, { idField: 'id' }) as Observable<User>
   }
 

@@ -31,7 +31,7 @@ export class ProfilePage implements OnInit {
     this.dataService.getUserProfile().subscribe((data) => {
       this.profile = data;
     });
-    this.dataService.getUserById().subscribe(res => {
+    this.dataService.getUserById(this.auth.currentUser.uid).subscribe(res => {
       this.userName = res["name"];
       this.userLastName = res["surname"];
     });

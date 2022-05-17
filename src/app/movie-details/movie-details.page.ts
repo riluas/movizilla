@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../services/data.service';
+import { Auth } from '@angular/fire/auth';
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.page.html',
@@ -20,8 +21,9 @@ export class MovieDetailsPage implements OnInit {
   commentsCard = [];
   userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
   commentsAvatar = [];
+  userName: string;
 
-  constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder,) {
+  constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder, private auth: Auth,) {
     this.dataService.getLikedMovies().subscribe(res => {
       this.resLikedMovies = res;
       this.movieId = this.route.snapshot.paramMap.get('id');
@@ -29,7 +31,7 @@ export class MovieDetailsPage implements OnInit {
     });
     this.dataService.getUser().subscribe((data) => {
       data.forEach(element => {
-        this.commentsAvatar.push({ userId: element.BhdH20pmXHQ4OnOz2nFk3UKtKas2, imageURL: element.imageUrl });
+        this.commentsAvatar.push({ userId: element[this.auth.currentUser.uid], imageURL: element.imageUrl, userName: element.name});
       });
     });
   }
@@ -106,8 +108,28 @@ export class MovieDetailsPage implements OnInit {
   getCommentUserPhoto(userId) {
     let filtered;
     filtered = this.commentsAvatar.filter((value) => {
-        return  value.userId == userId;
+      return value.userId == userId;
     });
-    return filtered[0].imageURL;
+
+    if (filtered[0] == undefined) {
+      return "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
+    }
+    else {
+      return filtered[0].imageURL;
+    }
   }
+
+    //Get the name from the userId of the comment
+    getUserName(userId) {
+    let filtered;
+    filtered = this.commentsAvatar.filter((value) => {
+      return value.userId == userId;
+    });
+    if (filtered[0] == undefined) {
+      return "Noname";
+    }
+    else {
+      return filtered[0].userName;
+    }
+    }
 }

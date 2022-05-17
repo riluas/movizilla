@@ -44,10 +44,10 @@
 
   <form [formGroup]="comments" (ngSubmit)="userComment()">
 
-    <ion-item  fill="solid" class="ion-margin-bottom">
+    <ion-item fill="solid" class="ion-margin-bottom">
       <ion-label position="stacked"></ion-label>
       <ion-input type="text" placeholder="Comment" formControlName="comment"></ion-input>
-      <ion-note slot="error"*ngIf="(comment.dirty || comment.touched) && comment.errors">Name is required</ion-note>
+      <ion-note slot="error" *ngIf="(comment.dirty || comment.touched) && comment.errors">Name is required</ion-note>
     </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="!comments.valid">Comment</ion-button>
@@ -70,28 +70,28 @@
   </ion-col> -->
 
 
-    
-    <ion-card  *ngFor="let item of commentsCard; let i = index">
-      <ion-avatar class="avatar" >
-        <img *ngIf="profile?.imageUrl; else placheolder_avatar;" [src]="profile.imageUrl" />
-        <ng-template #placheolder_avatar>
-          <ion-avatar class="avatar" >
-            <img id="avatar" src={{getCommentUserPhoto(item.userId)}}>
-          </ion-avatar>
-        </ng-template>
+
+  <ion-card *ngFor="let item of commentsCard; let i = index">
+
+    <div style="display: flex; align-items: center;">
+      <ion-avatar class="avatar">
+        <img id="avatar" src="{{getCommentUserPhoto(item.userId)}}">
       </ion-avatar>
-      <ion-card-content>
-        {{item.comment}}
-      </ion-card-content>
-    </ion-card>
+      <span style="padding-left: 8px;">{{getUserName(item.userId)}}</span>
+    </div>
+   
+    <ion-card-content>
+      {{item.comment}}
+    </ion-card-content>
+  </ion-card>
 
-    <ion-card *ngIf="commentsCard.length == 0">
-      <ion-card-content>
-        Be the first to leave a comment!!
-      </ion-card-content>
-    </ion-card>
+  <ion-card *ngIf="commentsCard.length == 0">
+    <ion-card-content>
+      Be the first to leave a comment!!
+    </ion-card-content>
+  </ion-card>
 
 
-    
+
 
 </ion-content>
