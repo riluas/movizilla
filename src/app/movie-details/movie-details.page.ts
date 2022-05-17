@@ -104,13 +104,10 @@ export class MovieDetailsPage implements OnInit {
 
   //Get the avatar from the userId of the comment
   getCommentUserPhoto(userId) {
-    let imageFromUser;
-    this.commentsAvatar.forEach(element => {
-      if (userId == element.userId) {
-        imageFromUser = element.imageURL;
-        console.log(element);
-      }
+    let filtered;
+    filtered = this.commentsAvatar.filter((value) => {
+        return  value.userId == userId;
     });
-    return imageFromUser;
+    return filtered[0].imageURL;
   }
 }
