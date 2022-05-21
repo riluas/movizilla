@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { empty, Observable } from 'rxjs';
 import { Auth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
-import { collectionData, doc, docData, Firestore, setDoc } from '@angular/fire/firestore';
+import { collectionData, doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {
   getDownloadURL,
   ref,
@@ -45,7 +45,7 @@ export class DataService {
   }
 
   getLikedMovies() {
-    const likedDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}/liked/movieId`);
+    const likedDocRef = doc(this.firestore, `users/${this.auth.currentUser.uid}/fav/movieId`);
     return docData(likedDocRef)
   }
 
@@ -131,7 +131,7 @@ export class DataService {
       if (push) {
         ids.push(movieId);
       }
-      const userDocRef = doc(this.firestore, `users/${user.uid}/liked/movieId`);
+      const userDocRef = doc(this.firestore, `users/${user.uid}/fav/movieId`);
       await setDoc(userDocRef, {
         ids,
       });
@@ -139,6 +139,18 @@ export class DataService {
     } catch (e) {
       return null;
     }
+  }
+
+
+  async like_dislike(like_dislike){
+    const userId = this.auth.currentUser.uid;
+    // const like = comment;
+    let arrayLikes = [];
+    arrayLikes.push({ userId: "12345", like: like_dislike })
+    const userDocRef = doc(this.firestore, `comments/752623`);
+    await updateDoc(userDocRef, {
+      arrayLikes,
+    });
   }
 
   async uploadComment(comment, movieId, movieArrayComments) {

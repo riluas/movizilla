@@ -12,6 +12,8 @@ import { Auth } from '@angular/fire/auth';
 export class MovieDetailsPage implements OnInit {
 
   movie = null;
+  favIcon = false;
+  disLikeIcon = false;
   likeIcon = false;
   imageBaseUrl = environment.images;
   movieId: string;
@@ -31,7 +33,7 @@ export class MovieDetailsPage implements OnInit {
     });
     this.dataService.getUser().subscribe((data) => {
       data.forEach(element => {
-        this.commentsAvatar.push({ userId: element[this.auth.currentUser.uid], imageURL: element.imageUrl, userName: element.name});
+        this.commentsAvatar.push({ userId: element[this.auth.currentUser.uid], imageURL: element.imageUrl, userName: element.name });
       });
     });
   }
@@ -66,7 +68,36 @@ export class MovieDetailsPage implements OnInit {
   };
 
 
-  //Set like or undo like
+
+  like() {
+    if (this.disLikeIcon) {
+      this.disLikeIcon = false;
+    }
+    if (this.likeIcon) {
+      this.likeIcon = false;
+      this.dataService.like_dislike(false);
+    }
+    else {
+      this.likeIcon = true;
+      this.dataService.like_dislike(true);
+    }
+  }
+
+  dislike() {
+    if (this.likeIcon) {
+      this.likeIcon = false;
+    }
+    //if not dislike
+    if (this.disLikeIcon) {
+      this.disLikeIcon = false;
+    }
+    //if dislike
+    else {
+      this.disLikeIcon = true;
+      this.dataService.like_dislike(false);
+    }
+  }
+  //Set fav or undo fav
   arrayLiked(movieId, delet) {
 
     if (!this.resLikedMovies) {
@@ -79,7 +110,7 @@ export class MovieDetailsPage implements OnInit {
           this.resLikedMovies.ids.splice(index, 1);
         }
         if (element == movieId) {
-          this.likeIcon = true;
+          this.favIcon = true;
         }
         index++;
       });
@@ -89,18 +120,18 @@ export class MovieDetailsPage implements OnInit {
     }
   }
 
-  liked() {
-    if (this.likeIcon) {
+  fav() {
+    if (this.favIcon) {
       //Undo like
       this.arrayLiked(this.movieId, true);
       this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, false);
-      this.likeIcon = false;
+      this.favIcon = false;
     }
     else {
       //Like
       this.arrayLiked(this.movieId, false);
       this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, true);
-      this.likeIcon = true;
+      this.favIcon = true;
     }
   };
 
@@ -119,8 +150,8 @@ export class MovieDetailsPage implements OnInit {
     }
   }
 
-    //Get the name from the userId of the comment
-    getUserName(userId) {
+  //Get the name from the userId of the comment
+  getUserName(userId) {
     let filtered;
     filtered = this.commentsAvatar.filter((value) => {
       return value.userId == userId;
@@ -131,5 +162,5 @@ export class MovieDetailsPage implements OnInit {
     else {
       return filtered[0].userName;
     }
-    }
+  }
 }
