@@ -141,7 +141,7 @@ export class DataService {
     }
   }
 
-
+  //Voy por aqui, necesito que likesArray me devuelva bien los valores porque cuando le hace el update me borra los de la db ya que no le estoy pasando los viejos.
   async like_dislike(likesArray,like_dislike, toDelete) {
     const userId = this.auth.currentUser.uid;
     let arrayLikes = [];
