@@ -17,8 +17,9 @@ export class MovieDetailsPage implements OnInit {
   likeIcon = false;
   imageBaseUrl = environment.images;
   movieId: string;
-  resLikedMovies: any;
+  resFavMovies: any;
   commentsArray: any;
+  likesArray = [];
   comments: FormGroup;
   commentsCard = [];
   userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
@@ -27,9 +28,9 @@ export class MovieDetailsPage implements OnInit {
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder, private auth: Auth,) {
     this.dataService.getLikedMovies().subscribe(res => {
-      this.resLikedMovies = res;
+      this.resFavMovies = res;
       this.movieId = this.route.snapshot.paramMap.get('id');
-      this.arrayLiked(this.movieId, false)
+      this.arrayFav(this.movieId, false)
     });
     this.dataService.getUser().subscribe((data) => {
       data.forEach(element => {
@@ -47,15 +48,35 @@ export class MovieDetailsPage implements OnInit {
     this.dataService.getMovieDetails(this.movieId).subscribe((res) => {
       this.movie = res;
     });
-    this.dataService.getComments(this.route.snapshot.paramMap.get('id')).subscribe((res) => {
+    this.dataService.getCommentsLikes(this.route.snapshot.paramMap.get('id')).subscribe((res) => {
       this.commentsArray = res;
       if (this.commentsArray) {
+        console.log(this.commentsArray);
         this.commentsCard = [];
         this.commentsArray.arrayComments.forEach(element => {
           this.commentsCard.push({ userId: element.userId, comment: element.userComment });
         });
-      } else {
-        console.log("Ta basio");
+      }
+
+      if (this.commentsArray.arrayLikes !== undefined) {
+        console.log(this.commentsArray.arrayLikes);
+        this.commentsArray.arrayLikes.forEach(element => {
+          this.likesArray.push({ userId: element.userId, like: element.like });
+        });
+
+        //Filter the incoming array of likes and set the color to the like or dislike button if the user has liked or not.
+        this.likesArray.filter((value) => {
+          if (value.userId == 12345) {
+            if (value.like) {
+              this.likeIcon = true;
+            }
+            if (!value.like) {
+              this.disLikeIcon = true;
+            }
+          }
+
+        });
+
       }
     });
     this.comments = this.formBuilder.group({
@@ -69,45 +90,83 @@ export class MovieDetailsPage implements OnInit {
 
 
 
-  like() {
-    if (this.disLikeIcon) {
-      this.disLikeIcon = false;
-    }
-    if (this.likeIcon) {
+  async likeDislike(isLike) {
+
+    //Unselect the like if is already liked.
+    if (isLike && this.likeIcon) {
+      this.dataService.like_dislike(this.likesArray,false, true);
       this.likeIcon = false;
-      this.dataService.like_dislike(false);
+      console.log("1");
+      
+      return;
     }
-    else {
+
+    //Unselect the dislike if is already disliked.
+    if (!isLike && this.disLikeIcon) {
+      this.dataService.like_dislike(this.likesArray,false, true);
+      this.disLikeIcon = false;
+      console.log("2");
+      
+      return;
+    }
+
+    //Select like if the like button is pressed and it's already disliked.
+    if (isLike && !this.likeIcon) {
+      this.dataService.like_dislike(this.likesArray,true, false);
+      this.disLikeIcon = false;
       this.likeIcon = true;
-      this.dataService.like_dislike(true);
-    }
-  }
 
-  dislike() {
-    if (this.likeIcon) {
-      this.likeIcon = false;
+      console.log("3");
+
     }
-    //if not dislike
-    if (this.disLikeIcon) {
-      this.disLikeIcon = false;
-    }
-    //if dislike
-    else {
+    //Select dislike if the dislike button is pressed and it's already liked.
+    if (!isLike && !this.disLikeIcon) {
+      this.dataService.like_dislike(this.likesArray,false, false);
       this.disLikeIcon = true;
-      this.dataService.like_dislike(false);
+      this.likeIcon = false;
+      
+      console.log("4");
     }
-  }
-  //Set fav or undo fav
-  arrayLiked(movieId, delet) {
 
-    if (!this.resLikedMovies) {
-      this.resLikedMovies = [];
+    // if (this.disLikeIcon) {
+    //   this.disLikeIcon = false;
+    // }
+    // if (this.likeIcon) {
+    //   this.likeIcon = false;
+    //   this.dataService.like_dislike(false);
+    // }
+    // else {
+    //   this.likeIcon = true;
+    //   this.dataService.like_dislike(true);
+    // }
+  }
+
+  // dislike() {
+  //   if (this.likeIcon) {
+  //     this.likeIcon = false;
+  //   }
+  //   //if not dislike
+  //   if (this.disLikeIcon) {
+  //     this.disLikeIcon = false;
+  //   }
+  //   //if dislike
+  //   else {
+  //     this.disLikeIcon = true;
+  //     this.dataService.like_dislike(false);
+  //   }
+  // }
+
+  //Set fav or undo fav
+  arrayFav(movieId, delet) {
+
+    if (!this.resFavMovies) {
+      this.resFavMovies = [];
     }
-    if (this.resLikedMovies.ids) {
+    if (this.resFavMovies.ids) {
       let index = 0;
-      this.resLikedMovies.ids.forEach(element => {
+      this.resFavMovies.ids.forEach(element => {
         if (element == movieId && delet) {
-          this.resLikedMovies.ids.splice(index, 1);
+          this.resFavMovies.ids.splice(index, 1);
         }
         if (element == movieId) {
           this.favIcon = true;
@@ -116,21 +175,21 @@ export class MovieDetailsPage implements OnInit {
       });
     }
     else {
-      this.resLikedMovies = [];
+      this.resFavMovies = [];
     }
   }
 
   fav() {
     if (this.favIcon) {
       //Undo like
-      this.arrayLiked(this.movieId, true);
-      this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, false);
+      this.arrayFav(this.movieId, true);
+      this.dataService.uploadLiked(this.resFavMovies.ids ? this.resFavMovies.ids : this.resFavMovies, this.movieId, false);
       this.favIcon = false;
     }
     else {
       //Like
-      this.arrayLiked(this.movieId, false);
-      this.dataService.uploadLiked(this.resLikedMovies.ids ? this.resLikedMovies.ids : this.resLikedMovies, this.movieId, true);
+      this.arrayFav(this.movieId, false);
+      this.dataService.uploadLiked(this.resFavMovies.ids ? this.resFavMovies.ids : this.resFavMovies, this.movieId, true);
       this.favIcon = true;
     }
   };

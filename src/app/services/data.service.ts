@@ -49,7 +49,7 @@ export class DataService {
     return docData(likedDocRef)
   }
 
-  getComments(movieId) {
+  getCommentsLikes(movieId) {
     const likedDocRef = doc(this.firestore, `comments/${movieId}`);
     return docData(likedDocRef)
   }
@@ -142,11 +142,32 @@ export class DataService {
   }
 
 
-  async like_dislike(like_dislike){
+  async like_dislike(likesArray,like_dislike, toDelete) {
     const userId = this.auth.currentUser.uid;
-    // const like = comment;
     let arrayLikes = [];
-    arrayLikes.push({ userId: "12345", like: like_dislike })
+    console.log("---------");
+    console.log(likesArray);
+    console.log("---------");
+
+    
+    console.log("To Delete? " + toDelete);
+    if (toDelete) {
+      let index = 0;
+      likesArray.forEach(element => {
+        console.log(element);
+        if (element.userId == 12345) {
+          likesArray.splice(index, 1);
+        }
+        index++;
+      });
+      console.log("///////////////");
+      console.log(likesArray);
+      console.log("///////////////");
+    }
+    else {
+      arrayLikes.push({ userId: "12345", like: like_dislike });
+      console.log(likesArray);
+    }
     const userDocRef = doc(this.firestore, `comments/752623`);
     await updateDoc(userDocRef, {
       arrayLikes,

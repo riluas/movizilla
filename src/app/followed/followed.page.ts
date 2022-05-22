@@ -14,17 +14,17 @@ export class FollowedPage implements OnInit {
   movies = [];
   currentPage = 1;
   imageBaseUrl = environment.images;
-  resLikedMovies: any;
+  resFavMovies: any;
 
   constructor(private dataService: DataService, private loadingController: LoadingController, private router: Router) { }
 
   ngOnInit() {
     this.dataService.getLikedMovies().subscribe(res => {
       if (res) {
-        this.resLikedMovies = res;
+        this.resFavMovies = res;
       }
       else {
-        this.resLikedMovies = false;
+        this.resFavMovies = false;
       }
       this.loadMovies();
     });
@@ -43,9 +43,9 @@ export class FollowedPage implements OnInit {
       await loading.present();
     }
     this.movies = [];
-    if (this.resLikedMovies != false) {
-      if (this.resLikedMovies.ids.length > 0) {
-        this.resLikedMovies.ids.forEach(movieId => {
+    if (this.resFavMovies != false) {
+      if (this.resFavMovies.ids.length > 0) {
+        this.resFavMovies.ids.forEach(movieId => {
           this.dataService.getMovieDetails(movieId).subscribe(res => {
 
             this.movies.push(res);
