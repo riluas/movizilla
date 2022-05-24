@@ -66,7 +66,7 @@ export class MovieDetailsPage implements OnInit {
 
         //Filter the incoming array of likes and set the color to the like or dislike button if the user has liked or not.
         this.likesArray.filter((value) => {
-          if (value.userId == 12345) {
+          if (value.userId == this.auth.currentUser.uid) {
             if (value.like) {
               this.likeIcon = true;
             }
@@ -94,7 +94,7 @@ export class MovieDetailsPage implements OnInit {
 
     //Unselect the like if is already liked.
     if (isLike && this.likeIcon) {
-      this.dataService.like_dislike(this.likesArray,false, true);
+      this.dataService.like_dislike(this.movieId,this.likesArray,false, true);
       this.likeIcon = false;
       console.log("1");
       
@@ -103,7 +103,7 @@ export class MovieDetailsPage implements OnInit {
 
     //Unselect the dislike if is already disliked.
     if (!isLike && this.disLikeIcon) {
-      this.dataService.like_dislike(this.likesArray,false, true);
+      this.dataService.like_dislike(this.movieId,this.likesArray,false, true);
       this.disLikeIcon = false;
       console.log("2");
       
@@ -112,7 +112,7 @@ export class MovieDetailsPage implements OnInit {
 
     //Select like if the like button is pressed and it's already disliked.
     if (isLike && !this.likeIcon) {
-      this.dataService.like_dislike(this.likesArray,true, false);
+      this.dataService.like_dislike(this.movieId,this.likesArray,true, false);
       this.disLikeIcon = false;
       this.likeIcon = true;
 
@@ -121,7 +121,7 @@ export class MovieDetailsPage implements OnInit {
     }
     //Select dislike if the dislike button is pressed and it's already liked.
     if (!isLike && !this.disLikeIcon) {
-      this.dataService.like_dislike(this.likesArray,false, false);
+      this.dataService.like_dislike(this.movieId,this.likesArray,false, false);
       this.disLikeIcon = true;
       this.likeIcon = false;
       
