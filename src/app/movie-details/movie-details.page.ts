@@ -59,7 +59,8 @@ export class MovieDetailsPage implements OnInit {
       }
 
       if (this.commentsArray.arrayLikes !== undefined) {
-        console.log(this.commentsArray.arrayLikes);
+        // console.log(this.commentsArray.arrayLikes);
+        this.likesArray = [];
         this.commentsArray.arrayLikes.forEach(element => {
           this.likesArray.push({ userId: element.userId, like: element.like });
         });
@@ -74,9 +75,7 @@ export class MovieDetailsPage implements OnInit {
               this.disLikeIcon = true;
             }
           }
-
         });
-
       }
     });
     this.comments = this.formBuilder.group({
@@ -91,28 +90,30 @@ export class MovieDetailsPage implements OnInit {
 
 
   async likeDislike(isLike) {
-
+    console.log("al entrar");
+    console.log(this.commentsArray);
+    console.log("al entrar");
     //Unselect the like if is already liked.
     if (isLike && this.likeIcon) {
-      this.dataService.like_dislike(this.movieId,this.likesArray,false, true);
+      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
       this.likeIcon = false;
       console.log("1");
-      
+
       return;
     }
 
     //Unselect the dislike if is already disliked.
     if (!isLike && this.disLikeIcon) {
-      this.dataService.like_dislike(this.movieId,this.likesArray,false, true);
+      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
       this.disLikeIcon = false;
       console.log("2");
-      
+
       return;
     }
 
     //Select like if the like button is pressed and it's already disliked.
     if (isLike && !this.likeIcon) {
-      this.dataService.like_dislike(this.movieId,this.likesArray,true, false);
+      this.dataService.like_dislike(this.movieId, this.commentsArray, true, true);
       this.disLikeIcon = false;
       this.likeIcon = true;
 
@@ -121,11 +122,15 @@ export class MovieDetailsPage implements OnInit {
     }
     //Select dislike if the dislike button is pressed and it's already liked.
     if (!isLike && !this.disLikeIcon) {
-      this.dataService.like_dislike(this.movieId,this.likesArray,false, false);
+      console.log("Esto es de el detail");
+
+      console.log(this.commentsArray);
+      console.log("4");
+      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
       this.disLikeIcon = true;
       this.likeIcon = false;
-      
-      console.log("4");
+
+
     }
 
     // if (this.disLikeIcon) {
