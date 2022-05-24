@@ -165,7 +165,9 @@ export class DataService {
       console.log("///////////////");
     }
     else {
-      arrayLikes.push({ userId: userId, like: like_dislike });
+      //Ahora al ponerle esto lo que me está haciendo es que esta poniendo elementos de más en el array. Pero almenos ya no lo borra
+      likesArray.push({ userId: userId, like: like_dislike });
+      arrayLikes = likesArray;
       console.log(likesArray);
     }
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
