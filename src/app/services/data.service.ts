@@ -141,46 +141,46 @@ export class DataService {
     }
   }
 
-  async like_dislike(movieId,commentLikeArray,like_dislike, toDelete, toUpdate) {
+  async like_dislike(movieId, commentLikeArray, like_dislike, toDelete, toUpdate) {
     const userId = this.auth.currentUser.uid;
     let arrayLikes;
-    arrayLikes = commentLikeArray.arrayLikes;
 
-    if (arrayLikes == undefined) {
-        arrayLikes = [];
+    if (commentLikeArray == undefined) {
+      arrayLikes = [];
+    }
+    else {
+      arrayLikes = commentLikeArray.arrayLikes;
     }
 
-
     if (toDelete) {
-      console.log("si");
-      
+
       let index = 0;
       arrayLikes.forEach(element => {
-        console.log("sissss");
         if (element.userId == userId) {
-          console.log(arrayLikes);
-          
           arrayLikes.splice(index, 1);
-
-          console.log(arrayLikes);
           if (toUpdate) {
-              arrayLikes.push({ userId: userId, like: like_dislike });
+            arrayLikes.push({ userId: userId, like: like_dislike });
           }
-
         }
         index++;
       });
     }
     else {
-      console.log("niee");
-      
       arrayLikes.push({ userId: userId, like: like_dislike });
     }
-    
-    const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    await updateDoc(userDocRef, {
-      arrayLikes,
-    });
+    if (commentLikeArray == undefined) {
+      const userDocRef = doc(this.firestore, `comments/${movieId}`);
+      await setDoc(userDocRef, {
+        arrayLikes,
+      });
+    }
+    else {
+      const userDocRef = doc(this.firestore, `comments/${movieId}`);
+      await updateDoc(userDocRef, {
+        arrayLikes,
+      });
+    }
+
   }
 
   async uploadComment(comment, movieId, movieArrayComments) {
@@ -192,9 +192,15 @@ export class DataService {
     if (movieArrayComments === undefined) {
       newArrayComments.push({ userId: userId, userComment: usercomment });
       arrayComments = newArrayComments;
-    } else {
+    }
+    else {
+      console.log("eee");
       //check if the movie has any comments
       if (movieArrayComments && (Object.keys(movieArrayComments).length === 0)) {
+        newArrayComments.push({ userId: userId, userComment: usercomment });
+        arrayComments = newArrayComments;
+      }
+      if (movieArrayComments.arrayComments === undefined) {
         newArrayComments.push({ userId: userId, userComment: usercomment });
         arrayComments = newArrayComments;
       }
@@ -203,10 +209,19 @@ export class DataService {
         arrayComments = movieArrayComments.arrayComments;
       }
     }
-    const userDocRef = doc(this.firestore, `comments/${movieId}`);
-    await setDoc(userDocRef, {
-      arrayComments,
-    });
+
+    if (movieArrayComments === undefined) {
+      const userDocRef = doc(this.firestore, `comments/${movieId}`);
+      await setDoc(userDocRef, {
+        arrayComments,
+      });
+    }
+    else {
+      const userDocRef = doc(this.firestore, `comments/${movieId}`);
+      await updateDoc(userDocRef, {
+        arrayComments,
+      });
+    }
 
   }
 

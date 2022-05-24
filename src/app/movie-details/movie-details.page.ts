@@ -52,30 +52,33 @@ export class MovieDetailsPage implements OnInit {
       this.commentsArray = res;
       if (this.commentsArray) {
         console.log(this.commentsArray);
-        this.commentsCard = [];
-        this.commentsArray.arrayComments.forEach(element => {
-          this.commentsCard.push({ userId: element.userId, comment: element.userComment });
-        });
+        if (this.commentsArray.arrayComments !== undefined) {
+          this.commentsCard = [];
+          this.commentsArray.arrayComments.forEach(element => {
+            this.commentsCard.push({ userId: element.userId, comment: element.userComment });
+          });
+        }
       }
+      if (this.commentsArray) {
+        if (this.commentsArray.arrayLikes !== undefined) {
+          // console.log(this.commentsArray.arrayLikes);
+          this.likesArray = [];
+          this.commentsArray.arrayLikes.forEach(element => {
+            this.likesArray.push({ userId: element.userId, like: element.like });
+          });
 
-      if (this.commentsArray.arrayLikes !== undefined) {
-        // console.log(this.commentsArray.arrayLikes);
-        this.likesArray = [];
-        this.commentsArray.arrayLikes.forEach(element => {
-          this.likesArray.push({ userId: element.userId, like: element.like });
-        });
-
-        //Filter the incoming array of likes and set the color to the like or dislike button if the user has liked or not.
-        this.likesArray.filter((value) => {
-          if (value.userId == this.auth.currentUser.uid) {
-            if (value.like) {
-              this.likeIcon = true;
+          //Filter the incoming array of likes and set the color to the like or dislike button if the user has liked or not.
+          this.likesArray.filter((value) => {
+            if (value.userId == this.auth.currentUser.uid) {
+              if (value.like) {
+                this.likeIcon = true;
+              }
+              if (!value.like) {
+                this.disLikeIcon = true;
+              }
             }
-            if (!value.like) {
-              this.disLikeIcon = true;
-            }
-          }
-        });
+          });
+        }
       }
     });
     this.comments = this.formBuilder.group({
@@ -112,7 +115,7 @@ export class MovieDetailsPage implements OnInit {
     if (isLike && !this.likeIcon) {
       if (!this.disLikeIcon) {
         this.dataService.like_dislike(this.movieId, this.commentsArray, true, false, true);
-      }else{
+      } else {
         this.dataService.like_dislike(this.movieId, this.commentsArray, true, true, true);
       }
       this.disLikeIcon = false;
@@ -127,7 +130,7 @@ export class MovieDetailsPage implements OnInit {
       if (!this.likeIcon) {
         console.log("prim if");
         this.dataService.like_dislike(this.movieId, this.commentsArray, false, false, true);
-      }else{
+      } else {
         console.log("sec else");
         this.dataService.like_dislike(this.movieId, this.commentsArray, false, true, true);
       }
@@ -137,34 +140,7 @@ export class MovieDetailsPage implements OnInit {
 
 
     }
-
-    // if (this.disLikeIcon) {
-    //   this.disLikeIcon = false;
-    // }
-    // if (this.likeIcon) {
-    //   this.likeIcon = false;
-    //   this.dataService.like_dislike(false);
-    // }
-    // else {
-    //   this.likeIcon = true;
-    //   this.dataService.like_dislike(true);
-    // }
   }
-
-  // dislike() {
-  //   if (this.likeIcon) {
-  //     this.likeIcon = false;
-  //   }
-  //   //if not dislike
-  //   if (this.disLikeIcon) {
-  //     this.disLikeIcon = false;
-  //   }
-  //   //if dislike
-  //   else {
-  //     this.disLikeIcon = true;
-  //     this.dataService.like_dislike(false);
-  //   }
-  // }
 
   //Set fav or undo fav
   arrayFav(movieId, delet) {
