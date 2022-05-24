@@ -141,32 +141,36 @@ export class DataService {
     }
   }
 
-  //Voy por aqui, necesito que likesArray me devuelva bien los valores porque cuando le hace el update me borra los de la db ya que no le estoy pasando los viejos.
-  async like_dislike(movieId,commentLikeArray,like_dislike, toDelete) {
+  async like_dislike(movieId,commentLikeArray,like_dislike, toDelete, toUpdate) {
     const userId = this.auth.currentUser.uid;
     let arrayLikes;
     arrayLikes = commentLikeArray.arrayLikes;
-
-    console.log("To Delete? " + toDelete);
     if (toDelete) {
-      console.log("entra");
-      console.log(arrayLikes);
+      console.log("si");
+      
       let index = 0;
       arrayLikes.forEach(element => {
-        console.log(element.userId, userId);
-       
-        
+        console.log("sissss");
         if (element.userId == userId) {
+          console.log(arrayLikes);
+          
           arrayLikes.splice(index, 1);
+
+          console.log(arrayLikes);
+          if (toUpdate) {
+              arrayLikes.push({ userId: userId, like: like_dislike });
+          }
+
         }
         index++;
       });
-      arrayLikes.push({ userId: userId, like: like_dislike });
     }
     else {
-      //Ahora al ponerle esto lo que me está haciendo es que esta poniendo elementos de más en el array. Pero almenos ya no lo borra 
+      console.log("niee");
+      
       arrayLikes.push({ userId: userId, like: like_dislike });
     }
+
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
     await updateDoc(userDocRef, {
       arrayLikes,

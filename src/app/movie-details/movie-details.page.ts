@@ -90,13 +90,11 @@ export class MovieDetailsPage implements OnInit {
 
 
   async likeDislike(isLike) {
-    console.log("al entrar");
-    console.log(this.commentsArray);
-    console.log("al entrar");
     //Unselect the like if is already liked.
     if (isLike && this.likeIcon) {
-      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
+      this.dataService.like_dislike(this.movieId, this.commentsArray, true, true, false);
       this.likeIcon = false;
+      this.disLikeIcon = false;
       console.log("1");
 
       return;
@@ -104,16 +102,19 @@ export class MovieDetailsPage implements OnInit {
 
     //Unselect the dislike if is already disliked.
     if (!isLike && this.disLikeIcon) {
-      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
       this.disLikeIcon = false;
+      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true, false);
       console.log("2");
-
       return;
     }
 
     //Select like if the like button is pressed and it's already disliked.
     if (isLike && !this.likeIcon) {
-      this.dataService.like_dislike(this.movieId, this.commentsArray, true, true);
+      if (!this.disLikeIcon) {
+        this.dataService.like_dislike(this.movieId, this.commentsArray, true, false, true);
+      }else{
+        this.dataService.like_dislike(this.movieId, this.commentsArray, true, true, true);
+      }
       this.disLikeIcon = false;
       this.likeIcon = true;
 
@@ -122,11 +123,15 @@ export class MovieDetailsPage implements OnInit {
     }
     //Select dislike if the dislike button is pressed and it's already liked.
     if (!isLike && !this.disLikeIcon) {
-      console.log("Esto es de el detail");
-
-      console.log(this.commentsArray);
       console.log("4");
-      this.dataService.like_dislike(this.movieId, this.commentsArray, false, true);
+      if (!this.likeIcon) {
+        console.log("prim if");
+        this.dataService.like_dislike(this.movieId, this.commentsArray, false, false, true);
+      }else{
+        console.log("sec else");
+        this.dataService.like_dislike(this.movieId, this.commentsArray, false, true, true);
+      }
+
       this.disLikeIcon = true;
       this.likeIcon = false;
 
