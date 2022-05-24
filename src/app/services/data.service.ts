@@ -145,6 +145,12 @@ export class DataService {
     const userId = this.auth.currentUser.uid;
     let arrayLikes;
     arrayLikes = commentLikeArray.arrayLikes;
+
+    if (arrayLikes == undefined) {
+        arrayLikes = [];
+    }
+
+
     if (toDelete) {
       console.log("si");
       
@@ -170,7 +176,7 @@ export class DataService {
       
       arrayLikes.push({ userId: userId, like: like_dislike });
     }
-
+    
     const userDocRef = doc(this.firestore, `comments/${movieId}`);
     await updateDoc(userDocRef, {
       arrayLikes,
