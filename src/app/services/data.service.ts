@@ -149,7 +149,12 @@ export class DataService {
       arrayLikes = [];
     }
     else {
-      arrayLikes = commentLikeArray.arrayLikes;
+      if (commentLikeArray.arrayLikes === undefined) {
+        arrayLikes = [];
+      }
+      else {
+        arrayLikes = commentLikeArray.arrayLikes;
+      }
     }
 
     if (toDelete) {
@@ -200,6 +205,7 @@ export class DataService {
         newArrayComments.push({ userId: userId, userComment: usercomment });
         arrayComments = newArrayComments;
       }
+      //check when the collection is created if the movie has the comments object
       if (movieArrayComments.arrayComments === undefined) {
         newArrayComments.push({ userId: userId, userComment: usercomment });
         arrayComments = newArrayComments;
