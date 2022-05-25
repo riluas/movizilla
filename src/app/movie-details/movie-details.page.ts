@@ -25,6 +25,7 @@ export class MovieDetailsPage implements OnInit {
   userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
   commentsAvatar = [];
   userName: string;
+  numLikes = 0;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private formBuilder: FormBuilder, private auth: Auth,) {
     this.dataService.getLikedMovies().subscribe(res => {
@@ -63,8 +64,13 @@ export class MovieDetailsPage implements OnInit {
         if (this.commentsArray.arrayLikes !== undefined) {
           // console.log(this.commentsArray.arrayLikes);
           this.likesArray = [];
+          this.numLikes = 0;
           this.commentsArray.arrayLikes.forEach(element => {
             this.likesArray.push({ userId: element.userId, like: element.like });
+            if (element.like == true) {
+              this.numLikes++;
+            }
+
           });
 
           //Filter the incoming array of likes and set the color to the like or dislike button if the user has liked or not.
