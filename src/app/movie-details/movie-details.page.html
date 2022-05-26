@@ -15,15 +15,15 @@
     </div>
     <ion-card-header>
       <ion-card-title class="title">{{movie.title}} 
-        <ion-button class="noBgButton" id="favButton" color="danger" fill="clear" shape="round" (click)="fav()">
+        <ion-button class="main-button" id="favButton" color="danger" fill="clear" shape="round" (click)="fav()">
           <ion-icon class="main-button" [name]="favIcon ? 'heart' : 'heart-outline'"></ion-icon>
         </ion-button>
       </ion-card-title>
       <div class="textWhite" class="containerLike">
-      <ion-button class="likeDislike" id="likeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(true)">
+      <ion-button id="likeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(true)">
         <ion-icon class="main-button" [name]="likeIcon ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon>
       </ion-button>
-      <ion-button class="likeDislike" id="disLikeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(false)">
+      <ion-button id="disLikeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(false)">
         <ion-icon class="main-button" [name]="disLikeIcon ? 'thumbs-down' : 'thumbs-down-outline'"></ion-icon>
       </ion-button>
     </div>
@@ -57,13 +57,26 @@
 
   <form [formGroup]="comments" (ngSubmit)="userComment()">
 
-    <ion-item fill="solid" class="ion-margin-bottom">
-      <ion-label position="stacked"></ion-label>
-      <ion-input type="text" placeholder="Comment" formControlName="comment"></ion-input>
+
+    <!-- <ion-item class="userInput textWhite">
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input class="emailPassword" type="password" [(ngModel)]="loginPassword"  name="password"></ion-input>
+    </ion-item> -->
+    
+    <ion-item fill="solid" class="customInput">
+      <ion-label position="floating">Comment</ion-label>
+      <ion-input class="emailPassword" type="text" formControlName="comment"></ion-input>
       <ion-note slot="error" *ngIf="(comment.dirty || comment.touched) && comment.errors">Only allowed between 1 and 150 characters</ion-note>
     </ion-item>
 
-    <ion-button expand="full" type="submit" [disabled]="!comments.valid">Comment</ion-button>
+    <ion-grid>
+      <ion-row class="ion-align-items-center textWhite">
+        <ion-col size="12" class="ion-text-center">
+          <ion-button id="loginButton" fill="clear" type="submit" [disabled]="!comments.valid">Comment</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
   </form>
 
   <ion-card *ngFor="let item of commentsCard.reverse(); let i = index">

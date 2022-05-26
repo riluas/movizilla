@@ -21,25 +21,29 @@ padding-top: 5%;
   justify-content: space-between;
   align-items: center;
 }
-// .likeDislike {
-//   text-align: center;
-//   left: 0;
-//   right: 0;
-// }
+
+.item-has-focus{
+    --highlight-background: rgb(36, 36, 36);
+    --ion-background-color: rgb(6, 4, 134) !important;
+    --color-focused: rgb(36, 36, 36) !important;
+ }
+ .item-has-focus > ion-label{
+    --highlight-background: rgb(36, 36, 36);
+    --ion-background-color: rgb(6, 4, 134) !important;
+    color: rgb(36, 36, 36) !important;
+ }
+
+ #loginButton{
+    margin-bottom: 15px;
+    height: 40px;
+    width: 50%;
+    border-color: transparent;
+    color: rgb(0, 0, 0);
+    background-color: rgb(146, 148, 156);
+    border-radius: 10px;
+}
 
 .main-button {
   --background-hover: var(--background);
   font-size: 38px;
 }
-
-// #favButton {
-//   position: relative;
-//   z-index: 99;
-//   float: right;
-// }
-// .noBgButton {
-//   position: relative;
-//   z-index: 99;
-//   margin-right: auto;
-//   // float: right;
-// }
