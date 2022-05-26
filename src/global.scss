@@ -36,3 +36,21 @@
     --background-hover: transparent;
     --ion-background-color: transparent;
 }
+
+ion-content{
+    --ion-background-color:rgb(42 48 60);
+}
+ion-toolbar{
+    --ion-background-color:rgb(30 36 47);
+    color: white;
+}
+
+ion-card{
+    --ion-background-color:rgb(30 36 47) !important;
+}
+ion-card-title{
+    color: white !important;
+}
+ion-card-subtitle{
+    color: #c4c4c4 !important;
+}
