@@ -88,12 +88,13 @@ export class MovieDetailsPage implements OnInit {
       }
     });
     this.comments = this.formBuilder.group({
-      comment: ['', [Validators.minLength(1)]],
+      comment: ['', [Validators.required,Validators.minLength(1), Validators.maxLength(150)]],
     });
   }
 
   async userComment() {
     this.dataService.uploadComment(this.comments.value["comment"], this.movieId, this.commentsArray);
+    this.comments.reset();
   };
 
 

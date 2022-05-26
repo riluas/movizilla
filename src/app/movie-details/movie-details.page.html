@@ -10,21 +10,23 @@
 
 <ion-content [fullscreen]="true">
   <ion-card *ngIf="movie">
+    <div class="textWhite" id="container">
     <img [src]="imageBaseUrl + '/w400' + movie.poster_path">
-
+    </div>
     <ion-card-header>
-      <ion-card-title>{{movie.title}}
+      <ion-card-title class="title">{{movie.title}} 
         <ion-button class="noBgButton" id="favButton" color="danger" fill="clear" shape="round" (click)="fav()">
           <ion-icon class="main-button" [name]="favIcon ? 'heart' : 'heart-outline'"></ion-icon>
         </ion-button>
-        <ion-button class="noBgButton" id="likeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(true)">
-          <ion-icon class="main-button" [name]="likeIcon ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon>
-        </ion-button>
-        <ion-button class="noBgButton" id="disLikeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(false)">
-          <ion-icon class="main-button" [name]="disLikeIcon ? 'thumbs-down' : 'thumbs-down-outline'"></ion-icon>
-        </ion-button>
       </ion-card-title>
-
+      <div class="textWhite" class="containerLike">
+      <ion-button class="likeDislike" id="likeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(true)">
+        <ion-icon class="main-button" [name]="likeIcon ? 'thumbs-up' : 'thumbs-up-outline'"></ion-icon>
+      </ion-button>
+      <ion-button class="likeDislike" id="disLikeButton" color="medium" fill="clear" shape="round" (click)="likeDislike(false)">
+        <ion-icon class="main-button" [name]="disLikeIcon ? 'thumbs-down' : 'thumbs-down-outline'"></ion-icon>
+      </ion-button>
+    </div>
       <ion-card-subtitle>{{movie.tagline}}</ion-card-subtitle>
       <ion-text color="tertiary">
         <span *ngFor="let g of movie.genres; let isLast = last">
@@ -58,29 +60,11 @@
     <ion-item fill="solid" class="ion-margin-bottom">
       <ion-label position="stacked"></ion-label>
       <ion-input type="text" placeholder="Comment" formControlName="comment"></ion-input>
-      <ion-note slot="error" *ngIf="(comment.dirty || comment.touched) && comment.errors">Name is required</ion-note>
+      <ion-note slot="error" *ngIf="(comment.dirty || comment.touched) && comment.errors">Only allowed between 1 and 150 characters</ion-note>
     </ion-item>
 
     <ion-button expand="full" type="submit" [disabled]="!comments.valid">Comment</ion-button>
-
   </form>
-
-
-
-  <!-- <ion-col size="12" size-xs="6"  size-sm="6" size-md="4" size-lg="3" *ngFor="let item of movies; let i = index" >
-    <ion-card [routerLink]=" [item.id]">
-      <img [src]="imageBaseUrl + '/w400' + item.poster_path" />
-      <ion-card-header>
-        <ion-card-title class="movieTitle">{{item.title}}</ion-card-title>
-        <ion-card-subtitle>
-          {{item.release_date ? (item.release_date | date:'d/M/yy') : 'No data' }}
-          <ion-badge color="primary">{{item.vote_average}}</ion-badge>
-        </ion-card-subtitle>
-      </ion-card-header>
-    </ion-card>
-  </ion-col> -->
-
-
 
   <ion-card *ngFor="let item of commentsCard.reverse(); let i = index">
 
