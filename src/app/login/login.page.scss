@@ -1,41 +1,65 @@
-#title{
+#title {
     margin-bottom: 10px;
 }
-#logo{
+
+#logo {
     width: 188px;
     margin: auto;
     display: block;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-.emailPassword{
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.emailPassword {
     color: rgb(199, 199, 199);
 }
-.emailPassword:focus{
+
+.emailPassword:focus {
     color: rgb(199, 199, 199);
 }
-#loginButton{
-    margin-top: 20px;
+
+.emailPassword {
+    color: rgb(199, 199, 199);
+}
+
+.emailPassword:focus {
+    color: rgb(199, 199, 199);
+}
+
+#loginButton {
+    margin-top: 30px;
     margin-bottom: 15px;
     height: 40px;
+    width: 50%;
     border-color: transparent;
-    color: rgb(43, 43, 43);
-    background-color: rgb(255 255 255 / 35%);
-    border-radius: 50px;   
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    background-color: #ececec;
+    border-radius: 10px;
 }
-.registerGuest{
+
+#register {
+    margin-bottom: -8px;
+    color: black;
+    text-decoration: underline;
+}
+
+.registerGuest {
     margin-top: -12px;
     margin-bottom: -8px;
 }
-.registerGuestText{
+
+.registerGuestText {
     font-size: 11px;
     --color: black;
 }
-.item-has-focus{
+
+.item-has-focus {
     --highlight-background: white;
     --color-focused: white !important;
- }
- .item-has-focus > ion-label{
+}
+
+.item-has-focus>ion-label {
     --highlight-background: white;
     color: white !important;
- }
+}

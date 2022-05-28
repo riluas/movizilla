@@ -8,13 +8,14 @@ ion-menu-button {
   right: 0;
   margin-top: 10px;
 }
+
 .containerLike {
-display: flex;
-justify-content: center;
-width: 100%;
-align-items: center;
-padding-bottom: 5%;
-padding-top: 5%;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding-bottom: 5%;
+  padding-top: 5%;
 }
 
 .title {
@@ -23,35 +24,34 @@ padding-top: 5%;
   align-items: center;
 }
 
-.item-has-focus{
-    --highlight-background: rgb(255, 255, 255);
-    --background: none;
-    color: rgb(146, 146, 146) !important;
- }
- .item-has-focus > ion-label{
-    --background: none;
-    color: rgb(146, 146, 146) !important;
- }
+.item-has-focus {
+  --highlight-background: rgb(255, 255, 255);
+  --background: none;
+  color: rgb(146, 146, 146) !important;
+}
 
- #loginButton{
-    margin-bottom: 15px;
-    height: 40px;
-    width: 50%;
-    border-color: transparent;
-    color: rgb(0, 0, 0);
-    font-weight: bold;
-    background-color: #ececec;
-    border-radius: 10px;
+.item-has-focus>ion-label {
+  --background: none;
+  color: rgb(146, 146, 146) !important;
 }
-.button-inner{
-  color: red !important;
+
+#commentButton {
+  margin-bottom: 15px;
+  height: 40px;
+  width: 50%;
+  border-color: transparent;
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  background-color: #ececec;
+  border-radius: 10px;
 }
+
 .main-button {
   --background-hover: var(--background);
   font-size: 38px;
 }
 
-.avatar{
+.avatar {
   margin-top: 10px;
   margin-left: 10px;
 }

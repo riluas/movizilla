@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  image : string;
+  image = "assets/img/ticket-logo.svg";
   credentials: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
@@ -18,18 +18,17 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
-  get email(){
+  get email() {
     return this.credentials.get('email');
   }
 
-  get password(){
+  get password() {
     return this.credentials.get('password');
   }
 
   ngOnInit() {
-    this.image = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
 
     this.credentials = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -61,9 +60,9 @@ export class LoginPage implements OnInit {
     const user = await this.authService.login(this.credentials.value);
     await loading.dismiss();
 
-    if(user){
-      this.router.navigateByUrl('/home', {replaceUrl: true});
-    } else{
+    if (user) {
+      this.router.navigateByUrl('/home', { replaceUrl: true });
+    } else {
       this.showAlert('Login failed', 'Please try again!');
     }
   };
