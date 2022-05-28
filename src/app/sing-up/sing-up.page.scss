@@ -2,6 +2,7 @@
     width: 60px;
     height: 60px;
     background-color: transparent;
+    color: white;
 }
 
 #arrow{
@@ -32,12 +33,14 @@ ion-item{
     --highlight-background: white;
     color: white !important;
  }
- #loginButton{
-    margin-top: 20px;
+ #create{
+    margin-top: 30px;
     margin-bottom: 15px;
     height: 40px;
+    width: 50%;
     border-color: transparent;
-    color: rgb(43, 43, 43);
-    background-color: rgb(255 255 255 / 35%);
-    border-radius: 50px;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    background-color: #ececec;
+    border-radius: 10px;
 }

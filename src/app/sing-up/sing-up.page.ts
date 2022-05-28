@@ -12,6 +12,7 @@ import { DataService } from '../services/data.service';
 })
 export class SingUpPage implements OnInit {
   singUpCredentials: FormGroup;
+  image = "assets/img/ticket-logo.svg";
   constructor(
     private formBuilder: FormBuilder,
     private loadingController: LoadingController,
