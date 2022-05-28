@@ -1,0 +1,6 @@
+{
+	"appId": "com.movizilla.app",
+	"appName": "movizilla",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
