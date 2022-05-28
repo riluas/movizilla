@@ -25,16 +25,26 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
+.button-inner{
+    color: red !important;
+}
 .customInput{
     margin-left: 20px;
     margin-right: 20px;
-    --ion-background-color: rgb(6, 4, 134) !important;
+    --ion-background-color: rgb(146, 146, 146) !important;
     --background: none;
     opacity:1;
     --ripple-color: transparent;
     --background-hover: transparent;
     --ion-background-color: transparent;
+}
+
+.textWhite{
+    color: white !important;
+}
+
+.semiWhite{
+    color: rgb(224, 224, 224) !important;
 }
 
 ion-content{
@@ -53,4 +63,7 @@ ion-card-title{
 }
 ion-card-subtitle{
     color: #c4c4c4 !important;
+}
+ion-menu-button{
+    color: white !important;
 }
