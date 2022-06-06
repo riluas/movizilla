@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">movizilla</string>
-    <string name="title_activity_main">movizilla</string>
-    <string name="package_name">com.movizilla.app</string>
-    <string name="custom_url_scheme">com.movizilla.app</string>
+    <string name="app_name">Movizilla</string>
+    <string name="title_activity_main">Movizilla</string>
+    <string name="package_name">com.movizilla.es</string>
+    <string name="custom_url_scheme">com.movizilla.es</string>
 </resources>

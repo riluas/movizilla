@@ -1,4 +1,4 @@
-package com.movizilla.app;
+package com.movizilla.es;
 
 import com.getcapacitor.BridgeActivity;
 
