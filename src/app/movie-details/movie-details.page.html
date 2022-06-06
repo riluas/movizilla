@@ -55,6 +55,8 @@
     </ion-card-content>
   </ion-card>
 
+
+  <!-- Comments section -->
   <form [formGroup]="comments" (ngSubmit)="userComment()">
 
     <ion-item class="customInput semiWhite">
@@ -78,7 +80,7 @@
 
     <div style="display: flex; align-items: center;">
       <ion-avatar class="avatar">
-        <img id="avatar" src="{{getCommentUserPhoto(item.userId)}}">
+        <img id="avatar" src="{{getCommentUserPhoto(item.userId) ? getCommentUserPhoto(item.userId) : defaultImage }}">
       </ion-avatar>
       <h6 style="padding-left: 8px;">{{getUserName(item.userId)}}</h6>
     </div>

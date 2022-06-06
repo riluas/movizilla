@@ -38,7 +38,7 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
+    this.userImage = "assets/img/account-circle.svg";
     this.email = this.dataService.getUserData();
   }
 

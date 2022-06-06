@@ -22,7 +22,7 @@ export class MovieDetailsPage implements OnInit {
   likesArray = [];
   comments: FormGroup;
   commentsCard = [];
-  userImage = "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
+  defaultImage = "assets/img/account-circle.svg";
   commentsAvatar = [];
   userName: string;
   numLikes = 0;
@@ -195,7 +195,7 @@ export class MovieDetailsPage implements OnInit {
     });
 
     if (filtered[0] == undefined) {
-      return "https://c.tenor.com/lTtlX5xlfmgAAAAC/nyan-cat.gif";
+      return "assets/img/account-circle.svg";
     }
     else {
       return filtered[0].imageURL;
